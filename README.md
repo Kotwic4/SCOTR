@@ -8,10 +8,10 @@ INPUT -> [[CONV -> RELU]*N -> POOL?]*M -> FC -> OUT
 
 Gdzie N i M >= 0.
 
-Ponieważ nasza sięc neuronowa bedzie się stosunkowo długo uczyć zastosujemy najprawdopodobniej:
-    * N = M = 1
-    * N = 2, M = 1
-    * N = 1, M = 2
+Ponieważ nasza sięc neuronowa bedzie się stosunkowo długo uczyć zastosujemy najprawdopodobniej jedna z możliwości:
+* N = M = 1
+* N = 2, M = 1
+* N = 1, M = 2
     
 ## Bibloteka
 
