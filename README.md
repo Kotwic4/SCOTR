@@ -1,23 +1,41 @@
 # SCOTR
+
 Simple Convolutional neural network Optical Text Recognition
 
-Created by Anna Bukowska, Radomir Krawczykiewicz
+Created by Anna Bukowska and Radomir Krawczykiewicz
 
-## Cel
+## Specyfikacja projektu
 
-Celem projektu jest zdobycie wiedzy o działaniu konwolucyjnych sieci neuronowych i na tej podstawie - stworznie własnej implementacji prostego systemu OCR (ang. Optical Character Recognition). Dążymy do tego, by program był w stanie analizować zdjęcia wydrukowanych tekstów i odczytywać zawarty na nich napis. Naszym głównym zródłem informacji będzie [kurs stanforda](http://cs231n.github.io/), na podstawie którego będziemy chcieli stworzyć naiwną implementację sieci konwolucyjnej (ang. Convolutional Neural Networks – CNN) w języku C. Ze względu na założenia, napisany kod będzie wolniejszy od produkcyjnych biblotek, jednak nauczy nas zasady działania sięci CNN.
+### Cel
+
+Celem projektu jest zdobycie wiedzy o działaniu konwolucyjnych sieci neuronowych i na tej podstawie stworznie własnej implementacji prostego systemu OCR ( ang. Optical Character Recognition ) . Dążymy do tego, by program był w stanie analizować zdjęcia wydrukowanych tekstów i odczytywać zawarty na nich napis. Naszym głównym będzie stworzenie naiwnej implementacji sieci konwolucyjnej ( ang. Convolutional Neural Networks – CNN ) w języku C. Ze względu na założenia, napisany kod będzie wolniejszy od produkcyjnych biblotek, jednak nauczy nas zasady działania sięci CNN.
 
 ### Wejscie
 
-Zdjęcia będą przyjmowane w postaci bitmap.
+Program na wejściu bedzie otrzymywał zdjęcie w postaci bitmapy.
 
 ### Działanie
 
-Ze zdjecia zostaną wyizolowane i przekazane pierwszej sieci nauronowej pojedyncze słowa. Powinna być ona wstanie podać ich długość. Następnie druga sieć neuronowa na wejście będzie dostawać fragment obrazka przedstawiajacy pojedyncze słowo oraz w pętli – kolejne pozycje liter (aż do limitu podanego przez pierwszą sieć neuronową. Jej zadaniem będzie zwracanie poszczególnych liter. Na koniec program połączy otrzymane znaki w wyrazy i wyświetli użytkownikowi odczytany tekst.
+Program bedzie skłądał się z dwóch sięci neuronowych które bedą miały poniższe role:
+* Analiza z ilu znaków skłąda się słowo wejściowe w zakresie od 0 do _N_, gdzie N = 10
+* Analiza jaki znak jest na _i_-tej pozycji słowa o długości _n_.
+
+Tym samym algorytm bedzie polegał na tym żeby podać wejsciowy obrazek do pierwszej sieci i ustalenie liczby _n_. Następnie w pętli dla _i_ = 1 do _i_ = _n_ bedziemy pytać drugiej sięci jaki znak znajduje się na _i_-tej pozycji słowa. Odczytane znaki zostaną połączone w słowo. 
 
 ### Wyjście
 
-Plik zawierający pełne zdania.
+Wypisanie w konsoli odczytanego słowa, które znajduje się na wejściowym zdjeciu.
+
+### Możliwe roszerzenia
+
+* Odczytywanie tekstu a nie słów.  
+Ze zdjecia zostaną wyizolowane i przekazane podstawowemu projektowi pojedyncze słowa. Na wyjściu zostanie wyświetlony odczytany tekst jako połaczenie słów odczytanych przez bazowy program. => Większy preprocesing i postprocesing
+* Rozpoznawanie pisma recznie napisanego  
+Dodanie odczytywanie pisma odrecznie napisanego lub "recznie" w programie graficznym. => Więcej wyjść w drugiej sięci neuronowej => Dłuższy czas uczenia
+* Dodanie kolejnych znaków do alfabetu
+Dodanie odczytywanie pisma odrecznie napisanego lub "recznie" w programie graficznym. => Więcej wyjść w drugiej sięci neuronowej => Dłuższy czas uczenia
+* Zwiekszenie długości otrzymanego słowa.
+Możemy zwiekszyć maksymalną długość wejściowego słowa _N_ do np 100. => Więcej wyjść w pierszej sięci neuronowej => Dłuższy czas uczenia
 
 ## Plan projektu
 
