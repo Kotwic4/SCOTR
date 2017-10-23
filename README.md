@@ -28,16 +28,17 @@ Wypisanie w konsoli odczytanego słowa, które znajduje się na wejściowym zdje
 
 ### Możliwe roszerzenia
 
+* Obsługa zdjeć w róznych rozdzielczości.  
+Zdjecią były preprocesowane w celu przeskalowaniu zdjećia do formatu który przyjmuje na wejście CNN.
 * Odczytywanie tekstu a nie słów.  
 Ze zdjecia zostaną wyizolowane i przekazane podstawowemu projektowi pojedyncze słowa. Na wyjściu zostanie wyświetlony odczytany tekst jako połaczenie słów odczytanych przez bazowy program. => Większy preprocesing i postprocesing.
 * Rozpoznawanie pisma recznie napisanego  
 Dodanie odczytywanie pisma odrecznie napisanego lub "recznie" w programie graficznym. => Więcej wyjść w drugiej sięci neuronowej. => Dłuższy czas uczenia.
-* Dodanie kolejnych znaków do alfabetu
+* Dodanie kolejnych znaków do alfabetu  
 Dodanie odczytywanie pisma odrecznie napisanego lub "recznie" w programie graficznym. => Więcej wyjść w drugiej sięci neuronowej. => Dłuższy czas uczenia.
-* Zwiekszenie długości otrzymanego słowa.
+* Zwiekszenie długości otrzymanego słowa.  
 Możemy zwiekszyć maksymalną długość wejściowego słowa _N_ do np 100. => Więcej wyjść w pierszej sięci neuronowej. => Dłuższy czas uczenia.
-* Obsługa zdjeć w róznych rozdzielczości.
-Zdjecią były preprocesowane w celu przeskalowaniu zdjećia do formatu który przyjmuje na wejście CNN.
+
 
 ## Plan projektu
 
