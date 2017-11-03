@@ -19,12 +19,9 @@ Cnn* initCnn(Point inSize);
 void train(Cnn* cnn, TestCase testCase);
 Tensor* forward(Tensor* input);
 void addLayer(Cnn* cnn, Layer* layer);
-void addConvLayer(Cnn* cnn,
-                  int stride,
-                  int spatial_extent,
-                  int number_filters,
-                  int padding);
+void addConvLayer(Cnn* cnn, int stride, int spatial_extent, int number_filters, int padding);
 void addFcLayer(Cnn* cnn, int out_size);
 void addPoolLayer(Cnn* cnn, int stride, int spatial_extent);
 void addReluLayer(Cnn* cnn);
+void freeCnn(Cnn* cnn);
 #endif //SCOTR_CNN_H
