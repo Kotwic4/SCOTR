@@ -12,7 +12,8 @@ typedef struct{
 Tensor* initTensor(Point size, int data_size);
 Tensor* copyTensor(Tensor* tensor);
 Tensor* addTensor(Tensor* a, Tensor* b);
-Tensor* minusTensor(Tensor* a, Tensor* b);
-void* getTensor(Tensor* tensor,Point index);
+Tensor* subTensor(Tensor* a, Tensor* b);
+void* getTensorField(Tensor* tensor,Point index);
 void freeTensor(Tensor* tensor);
+
 #endif //SCOTR_TENSOR_H

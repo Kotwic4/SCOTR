@@ -8,7 +8,7 @@ typedef struct{
 
 Vector* initVector(int size);
 void pushBackVector(Vector* vector, void* x);
-void* get(Vector* vector, int index);
+void* getVectorField(Vector* vector, int index);
 void freeVector(Vector* vector);
 
 #endif //SCOTR_VECTOR_H
