@@ -1,5 +1,6 @@
 #include <malloc.h>
 #include <memory.h>
+#include <stdio.h>
 #include "tensor.h"
 #include "point.h"
 

@@ -1,4 +1,5 @@
 #include <malloc.h>
+#include <stdio.h>
 #include "vector.h"
 
 Vector* initVector(int size){
