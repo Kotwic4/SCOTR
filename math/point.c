@@ -1,12 +1,8 @@
 #include <stdio.h>
 #include "point.h"
 
-Point copyPoint(Point point) {
-    return (Point) {point.H, point.W, point.D};
-}
-
 int convertPointToIndex(Point point, Point range){
-    // Index = d*(W+1)*(H+1) + h*(W+1) + w
+    // Index = d*W*H + h*W + w
     // where:
     // point = {h, d, w} each from 0 to N-1
     // range = {H, D, W} each from 1 to N
@@ -14,7 +10,7 @@ int convertPointToIndex(Point point, Point range){
         fprintf(stderr, "convertPointToIndex error: one of point value is out of range\n");
         return -1;
     }
-    return point.D * (range.W+1) * (range.H+1) + point.H * (range.W+1) + point.W;
+    return point.D * range.W * range.H + point.H * range.W + point.W;
 }
 
 Point convertIndexToPoint(int index, Point range){
@@ -23,10 +19,10 @@ Point convertIndexToPoint(int index, Point range){
         return NULL;
     }
     Point point;
-    point.D = index / ((range.W+1)*(range.H+1));
-    index = index - point.D * (range.W+1)*(range.H+1);
-    point.H = index / (range.W+1);
-    index = index - point.H * (range.W+1);
+    point.D = index / (range.W*range.H);
+    index = index - point.D * range.W*range.H;
+    point.H = index / range.W;
+    index = index - point.H * range.W;
     point.W = index;
     return point;
 }

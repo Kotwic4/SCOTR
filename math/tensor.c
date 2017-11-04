@@ -3,10 +3,15 @@
 #include "tensor.h"
 
 Tensor* initTensor(Point* size){
-    Tensor* thisTensor;
+    Tensor* thisTensor = malloc(sizeof(Tensor));
     thisTensor->data = calloc((size_t) size->H * size->W * size->D, sizeof(double));
     if(!thisTensor->data){
-        fprintf(stderr, "initTensor error: calloc error\n");
+        fprintf(stderr, "initTensor error: calloc for data error\n");
+        return NULL;
+    }
+    thisTensor->size = malloc(sizeof(Point));
+    if(!thisTensor->size){
+        fprintf(stderr, "initTensor error: calloc for size error\n");
         return NULL;
     }
     thisTensor->size = size;
@@ -15,7 +20,8 @@ Tensor* initTensor(Point* size){
 
 Tensor* copyTensor(Tensor* tensor){
     Tensor* thisTensor = initTensor(tensor->size);
-    memcpy(thisTensor, tensor, sizeof(tensor));
+    memcpy(thisTensor->data, tensor->data, sizeof(tensor->data));
+    memcpy(thisTensor->size, tensor->size, sizeof(tensor->size));
     return thisTensor;
 }
 
@@ -48,16 +54,18 @@ Tensor* subTensor(Tensor* a, Tensor* b){
 }
 
 
-void* getTensorField(Tensor* tensor, Point* index){
+double* getTensorField(Tensor* tensor, Point* index){
     int inx = convertPointToIndex(*index, *tensor->size);
-    return &tensor->data[inx];
+    return tensor->data + inx;
 }
 
 //warning: index range isn't checked (fast function)
-void* getFasterTensorField(Tensor* tensor, int index){
-    return &tensor->data[index];
+double* getFasterTensorField(Tensor* tensor, int index){
+    return tensor->data + index;
 }
 
 void freeTensor(Tensor* tensor){
     free(tensor->data);
+    free(tensor->size);
+    free(tensor);
 }

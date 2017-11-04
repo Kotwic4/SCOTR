@@ -7,7 +7,6 @@ typedef struct{
     int D; //depth
 }Point;
 
-Point copyPoint(Point point);
 int convertPointToIndex(Point point, Point range);
 Point convertIndexToPoint(int index, Point range);
 
