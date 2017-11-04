@@ -1,7 +1,3 @@
-//
-// Created by Radomir on 03.11.2017.
-//
-
 #ifndef SCOTR_FCLAYER_H
 #define SCOTR_FCLAYER_H
 

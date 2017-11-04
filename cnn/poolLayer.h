@@ -1,7 +1,3 @@
-//
-// Created by Radomir on 03.11.2017.
-//
-
 #ifndef SCOTR_POOLLAYER_H
 #define SCOTR_POOLLAYER_H
 

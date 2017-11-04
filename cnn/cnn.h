@@ -1,7 +1,3 @@
-//
-// Created by Radomir on 03.11.2017.
-//
-
 #ifndef SCOTR_CNN_H
 #define SCOTR_CNN_H
 

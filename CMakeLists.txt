@@ -3,5 +3,5 @@ project(SCOTR)
 
 set(CMAKE_C_STANDARD 99)
 
-set(SOURCE_FILES main.c math/vector.h math/tensor.h math/point.h cnn/testCase.h cnn/layer.h cnn/cnn.h cnn/convLayer.h cnn/fcLayer.h cnn/poolLayer.h cnn/reluLayer.h)
+set(SOURCE_FILES main.c math/vector.h math/tensor.h math/point.h cnn/testCase.h cnn/layer.h cnn/cnn.h cnn/convLayer.h cnn/fcLayer.h cnn/poolLayer.h cnn/reluLayer.h cnn/cnn.c)
 add_executable(SCOTR ${SOURCE_FILES} math/vector.h)
