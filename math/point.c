@@ -1,5 +1,12 @@
 #include <stdio.h>
+#include <malloc.h>
 #include "point.h"
+
+Point* copyPoint(Point point){
+    Point* newPoint = malloc(sizeof(Point));
+    *newPoint = point;
+    return newPoint;
+}
 
 int convertPointToIndex(Point point, Point range){
     // Index = d*W*H + h*W + w
@@ -16,7 +23,7 @@ int convertPointToIndex(Point point, Point range){
 Point convertIndexToPoint(int index, Point range){
     if(index >= range.H * range.W * range.D){
         fprintf(stderr, "convertIndexToPoint error: index is out of range");
-        return NULL;
+        return (Point){0,0,0};
     }
     Point point;
     point.D = index / (range.W*range.H);
