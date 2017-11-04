@@ -1,6 +1,7 @@
 #include <malloc.h>
 #include <memory.h>
 #include "tensor.h"
+#include "point.h"
 
 Tensor* initTensor(Point* size){
     Tensor* thisTensor = malloc(sizeof(Tensor));
@@ -20,8 +21,8 @@ Tensor* initTensor(Point* size){
 
 Tensor* copyTensor(Tensor* tensor){
     Tensor* thisTensor = initTensor(tensor->size);
-    memcpy(thisTensor->data, tensor->data, sizeof(tensor->data));
-    memcpy(thisTensor->size, tensor->size, sizeof(tensor->size));
+    memcpy(thisTensor->data, tensor->data, sizeof(double)*tensor->size->H*tensor->size->W*tensor->size->D);
+    memcpy(thisTensor->size, tensor->size, sizeof(int)*3);
     return thisTensor;
 }
 
