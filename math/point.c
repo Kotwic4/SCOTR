@@ -1,8 +1,8 @@
 #include <printf.h>
 #include "point.h"
 
-void copyPoint(Point newpoint, Point oldpoint) {
-    newpoint = (Point) {oldpoint.H, oldpoint.W, oldpoint.D};
+Point copyPoint(Point point) {
+    return (Point) {point.H, point.W, point.D};
 }
 
 int convertPointToIndex(Point point, Point range){
