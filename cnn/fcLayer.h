@@ -8,7 +8,7 @@ typedef struct{
     Tensor *back,*in,*out,*weights;
 }FcLayer;
 
-FcLayer* initFcLayer(Point inSize, int outSize);
+FcLayer* initFcLayer(Point* inSize, int outSize);
 void activateFcLayer(FcLayer* fcLayer, Tensor* in);
 void backPropFcLayer(FcLayer* fcLayer, Tensor* nextLayerBack);
 #endif //SCOTR_FCLAYER_H

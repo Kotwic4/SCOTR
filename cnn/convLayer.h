@@ -9,7 +9,7 @@ typedef struct{
     int stride, spatialExtent, padding;
 }ConvLayer;
 
-ConvLayer* initConvLayer(int stride, int spatialExtent, int filtersNumber, Point inSize);
+ConvLayer* initConvLayer(int stride, int spatialExtent, int filtersNumber, Point* inSize);
 void activateConvLayer(ConvLayer* convLayer, Tensor* in);
 void backPropConvLayer(ConvLayer* convLayer, Tensor* nextLayerBack);
 

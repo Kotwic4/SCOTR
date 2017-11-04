@@ -5,4 +5,6 @@ typedef struct{
     int x,y,z;
 }Point;
 
+Point* copyPoint(Point* point);
+
 #endif //SCOTR_POINT_H

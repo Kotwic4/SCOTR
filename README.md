@@ -136,7 +136,7 @@ Główna klasa bibloteki. Odpowiada za symulacje całej sieci neuronowej.
         * Cnn( Point in_size )
         * void train( Tensor<float>& input, Tensor<float>& expected )
         * void train( Tensor<TestCase>& cases )
-        * Tensor<float> forward( Tensor<float>& input )
+        * Tensor<float> getForward( Tensor<float>& input )
         * void activate( Layer* layer, Tensor<float>& in )
         * void back_prop( Layer* layer, Tensor<float>& next_layer_back )
         * void addConvLayer( int stride, int spatial_extent, int number_filters, int padding )

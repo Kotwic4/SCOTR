@@ -9,7 +9,7 @@ typedef struct{
     int stride, spatialExtent;
 }PoolLayer;
 
-PoolLayer* initPoolLayer(int stride, int spatialExtent, Point inSize);
+PoolLayer* initPoolLayer(int stride, int spatialExtent, Point* inSize);
 void activatePoolLayer(PoolLayer* poolLayer, Tensor* in);
 void backPropPoolLayer(PoolLayer* poolLayer, Tensor* nextLayerBack);
 #endif //SCOTR_POOLLAYER_H
