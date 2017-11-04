@@ -4,16 +4,16 @@
 #include "point.h"
 
 typedef struct{
-    void* data;
-    Point size;
+    double* data;
+    Point* size;
 }Tensor;
 
-// change int to size_t?
-Tensor* initTensor(Point size, int data_size);
+Tensor* initTensor(Point* size);
 Tensor* copyTensor(Tensor* tensor);
 Tensor* addTensor(Tensor* a, Tensor* b);
 Tensor* subTensor(Tensor* a, Tensor* b);
-void* getTensorField(Tensor* tensor,Point index);
+void* getTensorField(Tensor* tensor, Point* index);
+void* getFasterTensorField(Tensor* tensor, int index);
 void freeTensor(Tensor* tensor);
 
 #endif //SCOTR_TENSOR_H

@@ -3,8 +3,17 @@
 
 Vector* initVector(int size){
     Vector* thisVector;
-    thisVector->size = size;
-    thisVector->data = malloc(sizeof(void*) * thisVector->size);
+    if(size < 0){
+        fprintf(stderr, "initVector error: size can't be negative\n");
+        return NULL;
+    }
+    thisVector->data = calloc((size_t) size, sizeof(void*));
+    if(!thisVector->data){
+        fprintf(stderr, "initVector error: calloc function error\n");
+        thisVector->size = -1;
+    } else {
+        thisVector->size = size;
+    }
     return thisVector;
 }
 
@@ -17,14 +26,14 @@ void pushBackVector(Vector* vector, void* x){
         vector->data = data;
         vector->data[size-1] = x;
     } else {
-        printf("pushBackVector error, realloc data failure\n");
+        fprintf(stderr, "pushBackVector error: realloc function error\n");
     }
 }
 
-//get the value without deleting; chose by index
+//access to value; chose by index
 void* getVectorField(Vector* vector, int index){
     if(vector->size <= index){
-        printf("getVectorField error, index out of size\n");
+        fprintf(stderr, "getVectorField error: index out of range\n");
         return NULL;
     }
     return vector->data[index];
