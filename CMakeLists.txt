@@ -15,5 +15,5 @@ set(SOURCE_FILES
         cnn/fcLayer.h
         cnn/poolLayer.h
         cnn/reluLayer.h
-        cnn/cnn.c cnn/layer.c)
+        cnn/cnn.c cnn/layer.c cnn/reluLayer.c)
 add_executable(SCOTR ${SOURCE_FILES} main.c)
