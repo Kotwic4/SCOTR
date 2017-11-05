@@ -21,9 +21,8 @@ Vector* initVector(int size){
 //add element at the end of vector
 void pushBackVector(Vector* vector, void* x){
     int size = vector->size + 1;
-    void ** data = calloc((size_t) size, sizeof(void*));
+    void ** data = realloc(vector->data, sizeof(void*) * size);
     if (data) {
-        free(vector->data);
         vector->size = size;
         vector->data = data;
         vector->data[size-1] = x;

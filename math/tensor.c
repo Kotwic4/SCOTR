@@ -6,30 +6,25 @@
 
 Tensor* initTensor(Point* size){
     Tensor* thisTensor = malloc(sizeof(Tensor));
-    thisTensor->data = calloc((size_t) size->H * size->W * size->D, sizeof(double));
+    thisTensor->data = calloc((size_t) multiplePointParameters(size), sizeof(double));
     if(!thisTensor->data){
         fprintf(stderr, "initTensor error: calloc for data error\n");
         return NULL;
     }
-    thisTensor->size = malloc(sizeof(Point));
-    if(!thisTensor->size){
-        fprintf(stderr, "initTensor error: calloc for size error\n");
-        return NULL;
-    }
-    thisTensor->size = size;
+    thisTensor->size = copyPoint(*size);
     return thisTensor;
 }
 
 Tensor* copyTensor(Tensor* tensor){
     Tensor* thisTensor = initTensor(tensor->size);
-    memcpy(thisTensor->data, tensor->data, sizeof(double)*tensor->size->H*tensor->size->W*tensor->size->D);
-    memcpy(thisTensor->size, tensor->size, sizeof(int)*3);
+    memcpy(thisTensor->data, tensor->data, sizeof(double)*multiplePointParameters(tensor->size));
+    memcpy(thisTensor->size, tensor->size, sizeof(Point));
     return thisTensor;
 }
 
 Tensor* addTensor(Tensor* a, Tensor* b){
-    int Ia = a->size->H * a->size->W * a->size->D;
-    int Ib = b->size->H * b->size->W * b->size->D;
+    int Ia = multiplePointParameters(a->size);
+    int Ib = multiplePointParameters(b->size);
     if (Ia != Ib){
         fprintf(stderr, "addTensor error: size of tensor a is not equal size of tensor b\n");
         return NULL;
@@ -42,8 +37,8 @@ Tensor* addTensor(Tensor* a, Tensor* b){
 }
 
 Tensor* subTensor(Tensor* a, Tensor* b){
-    int Ia = a->size->H * a->size->W * a->size->D;
-    int Ib = b->size->H * b->size->W * b->size->D;
+    int Ia = multiplePointParameters(a->size);
+    int Ib = multiplePointParameters(b->size);
     if (Ia < Ib){
         fprintf(stderr, "subTensor error: size of tensor a is not equal size of tensor b\n");
         return NULL;

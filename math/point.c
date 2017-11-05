@@ -2,6 +2,10 @@
 #include <malloc.h>
 #include "point.h"
 
+int multiplePointParameters(Point* point){
+    return point->H*point->W*point->D;
+}
+
 Point* copyPoint(Point point){
     Point* newPoint = malloc(sizeof(Point));
     *newPoint = point;
