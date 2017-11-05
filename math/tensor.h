@@ -12,7 +12,7 @@ Tensor* initTensor(Point* size);
 Tensor* copyTensor(Tensor* tensor);
 Tensor* addTensor(Tensor* a, Tensor* b);
 Tensor* subTensor(Tensor* a, Tensor* b);
-double* getTensorField(Tensor* tensor, Point* index);
+double* getTensorField(Tensor* tensor, Point index);
 double* getFasterTensorField(Tensor* tensor, int index);
 void freeTensor(Tensor* tensor);
 
