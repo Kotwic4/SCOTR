@@ -25,7 +25,7 @@ int convertPointToIndex(Point point, Point range){
 }
 
 Point convertIndexToPoint(int index, Point range){
-    if(index >= range.H * range.W * range.D){
+    if(index >= multiplePointParameters(&range)){
         fprintf(stderr, "convertIndexToPoint error: index is out of range");
         return (Point){0,0,0};
     }
