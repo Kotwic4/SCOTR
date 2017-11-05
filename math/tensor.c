@@ -56,8 +56,8 @@ Tensor* subTensor(Tensor* a, Tensor* b){
 }
 
 
-double* getTensorField(Tensor* tensor, Point* index){
-    int inx = convertPointToIndex(*index, *tensor->size);
+double* getTensorField(Tensor* tensor, Point index){
+    int inx = convertPointToIndex(index, *tensor->size);
     return tensor->data + inx;
 }
 
