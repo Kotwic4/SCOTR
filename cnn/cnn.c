@@ -7,7 +7,7 @@
 
 Cnn* initCnn(Point* inSize){
     Cnn* cnn = malloc(sizeof(Cnn));
-    cnn->inSize = copyPoint(inSize);
+    cnn->inSize = copyPoint(*inSize);
     cnn->layers = initVector(0);
     return cnn;
 }
