@@ -38,3 +38,20 @@ void backPropLayer(Layer* layer, Tensor* nextLayerBack){
     }
 }
 
+
+void freeLayer(Layer* layer){
+    switch(layer->type){
+        case conv:
+            freeConvLayer((ConvLayer *) layer);
+            break;
+        case fc:
+            freeFcLayer((FcLayer *) layer);
+            break;
+        case relu:
+            freeeReluLayer((ReluLayer *) layer);
+            break;
+        case pool:
+            freePoolLayer((PoolLayer *) layer);
+            break;
+    }
+}
