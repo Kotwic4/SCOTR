@@ -31,6 +31,7 @@ Tensor * getForward(Cnn *cnn, Tensor *input){
 }
 
 void backPropCnn(Cnn* cnn, Tensor* result, Tensor * expected){
+
     Layer* nextLayer;
     Tensor * back = subTensor(result,expected);
     Layer* layer = getVectorField(cnn->layers,cnn->layers->size-1);
@@ -81,6 +82,10 @@ void addReluLayer(Cnn* cnn){
 }
 
 void freeCnn(Cnn* cnn){
+    for(int i = 0; i < cnn->layers->size; i++){
+        Layer* layer = getVectorField(cnn->layers,i);
+        freeLayer((Layer*) layer);
+    }
     freeVector(cnn->layers);
     free(cnn->inSize);
     free(cnn);
