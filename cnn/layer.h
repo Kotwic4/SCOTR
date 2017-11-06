@@ -1,3 +1,4 @@
+
 #ifndef SCOTR_LAYER_H
 #define SCOTR_LAYER_H
 
@@ -12,4 +13,5 @@ typedef struct{
 
 void activateLayer(Layer* layer, Tensor* in);
 void backPropLayer(Layer* layer, Tensor* nextLayerBack);
+void freeLayer(Layer* layer);
 #endif //SCOTR_LAYER_H
