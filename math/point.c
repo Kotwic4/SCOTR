@@ -2,6 +2,7 @@
 #include <malloc.h>
 #include "point.h"
 
+
 int multiplePointParameters(Point* point){
     return point->H*point->W*point->D;
 }
@@ -25,6 +26,7 @@ int convertPointToIndex(Point point, Point range){
 }
 
 Point convertIndexToPoint(int index, Point range){
+
     if(index >= multiplePointParameters(&range)){
         fprintf(stderr, "convertIndexToPoint error: index is out of range");
         return (Point){0,0,0};

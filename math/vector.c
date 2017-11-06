@@ -1,5 +1,6 @@
 #include <malloc.h>
 #include <stdio.h>
+#include <assert.h>
 #include "vector.h"
 
 Vector* initVector(int size){
@@ -37,6 +38,7 @@ void* getVectorField(Vector* vector, int index){
         fprintf(stderr, "getVectorField error: index out of range\n");
         return NULL;
     }
+//    assert(vector->size <= index);
     return vector->data + index;
 }
 

@@ -1,9 +1,10 @@
 #include <assert.h>
 #include <printf.h>
+#include <malloc.h>
 #include "../math/point.h"
 
 void TEST_multiplePointParameters(){
-    Point point1 = { .H = 1, .W = 2, .D = 3};
+    Point point1 = { 1, 2, 3};
     assert(multiplePointParameters(&point1) == 6);
     Point point2 = {100, 10, 1000};
     assert(multiplePointParameters(&point2) == 1000000);
@@ -15,6 +16,7 @@ void TEST_copyPoint(){
     assert(point1.H == point2->H);
     assert(point1.W == point2->W);
     assert(point1.D == point2->D);
+    free(point2);
 }
 
 void TEST_convertPointToIndex() {
@@ -35,8 +37,10 @@ void TEST_convertIndexToPoint(){
     assert(point.H == 1);
     assert(point.W == 0);
     assert(point.D == 2);
+
     point = convertIndexToPoint(300, range);
     assert(point.H == point.W == point.D == 0);
+
     assert(convertPointToIndex(convertIndexToPoint(21, range), range) == 21);
 }
 

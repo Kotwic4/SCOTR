@@ -9,6 +9,6 @@ void TEST_convertIndexToPoint();
 void TEST_POINT_ALL();
 
 //VECTOR
-
+void TEST_initVector();
 
 #endif //SCOTR_TESTS_H
