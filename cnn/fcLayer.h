@@ -11,4 +11,5 @@ typedef struct{
 FcLayer* initFcLayer(Point* inSize, int outSize);
 void activateFcLayer(FcLayer* fcLayer, Tensor* in);
 void backPropFcLayer(FcLayer* fcLayer, Tensor* nextLayerBack);
+void freeFcLayer(FcLayer* fcLayer);
 #endif //SCOTR_FCLAYER_H
