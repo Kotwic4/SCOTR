@@ -11,4 +11,5 @@ typedef struct{
 ReluLayer* initReluLayer(Point* inSize);
 void activateReluLayer(ReluLayer* reluLayer, Tensor* in);
 void backPropReluLayer(ReluLayer* reluLayer, Tensor* nextLayerBack);
+void freeReluLayer(ReluLayer* reluLayer);
 #endif //SCOTR_RELULAYER_H
