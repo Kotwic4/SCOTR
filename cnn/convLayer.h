@@ -12,5 +12,6 @@ typedef struct{
 ConvLayer* initConvLayer(int stride, int spatialExtent, int filtersNumber, Point* inSize);
 void activateConvLayer(ConvLayer* convLayer, Tensor* in);
 void backPropConvLayer(ConvLayer* convLayer, Tensor* nextLayerBack);
+void freeConvLayer(ConvLayer* convLayer);
 
 #endif //SCOTR_CONVLAYER_H
