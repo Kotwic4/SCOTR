@@ -48,7 +48,7 @@ void freeLayer(Layer* layer){
             freeFcLayer((FcLayer *) layer);
             break;
         case relu:
-            freeeReluLayer((ReluLayer *) layer);
+            freeReluLayer((ReluLayer *) layer);
             break;
         case pool:
             freePoolLayer((PoolLayer *) layer);
