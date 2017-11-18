@@ -15,5 +15,12 @@ set(SOURCE_FILES
         cnn/fcLayer.h
         cnn/poolLayer.h
         cnn/reluLayer.h
-        cnn/cnn.c cnn/layer.c cnn/reluLayer.c math/vector.c math/tensor.c math/point.c tests/point_test.c tests/tests.h tests/vector_test.c)
+        cnn/cnn.c
+        cnn/layer.c
+        cnn/reluLayer.c
+        math/vector.c
+        math/tensor.c
+        math/point.c
+        tests/point_test.c
+        tests/tests.h)
 add_executable(SCOTR ${SOURCE_FILES} main.c)
