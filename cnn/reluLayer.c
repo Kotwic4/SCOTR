@@ -35,4 +35,10 @@ void backPropReluLayer(ReluLayer* reluLayer, Tensor* nextLayerBack){
     }
 }
 
+void freeReluLayer(ReluLayer* reluLayer){
+    freeTensor(reluLayer->back);
+    freeTensor(reluLayer->out);
+    free(reluLayer);
+}
+
 
