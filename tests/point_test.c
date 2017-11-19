@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <printf.h>
 #include <malloc.h>
 #include "../math/point.h"
 

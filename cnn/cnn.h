@@ -5,6 +5,10 @@
 #include "../math/point.h"
 #include "testCase.h"
 #include "layer.h"
+#include "convLayer.h"
+#include "fcLayer.h"
+#include "reluLayer.h"
+#include "poolLayer.h"
 
 typedef struct {
     Vector* layers;

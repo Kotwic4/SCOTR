@@ -1,9 +1,4 @@
-#include <malloc.h>
 #include "cnn.h"
-#include "convLayer.h"
-#include "fcLayer.h"
-#include "poolLayer.h"
-#include "reluLayer.h"
 
 Cnn* initCnn(Point* inSize){
     Cnn* cnn = malloc(sizeof(Cnn));
@@ -62,7 +57,7 @@ void addLayer(Cnn* cnn, Layer* layer){
 }
 
 void addConvLayer(Cnn* cnn, int stride, int spatialExtent, int filtersNumber, int padding){
-    ConvLayer* convLayer = initConvLayer(stride,spatialExtent,filtersNumber,getCnnOutSize(cnn));
+    ConvLayer* convLayer = initConvLayer(stride,spatialExtent,filtersNumber,padding,getCnnOutSize(cnn));
     addLayer(cnn, (Layer *) convLayer);
 }
 

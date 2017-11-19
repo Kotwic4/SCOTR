@@ -2,6 +2,7 @@
 #define SCOTR_POOLLAYER_H
 
 #include "layer.h"
+#include <float.h>
 
 typedef struct{
     LayerType type; // pool

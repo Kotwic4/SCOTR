@@ -22,5 +22,11 @@ set(SOURCE_FILES
         math/tensor.c
         math/point.c
         tests/point_test.c
-        tests/tests.h)
+        tests/tests.h
+        cnn/poolLayer.c
+        util/debugAssert.h
+        cnn/convLayer.c
+        cnn/fcLayer.c
+        cnn/grad.c
+        cnn/grad.h)
 add_executable(SCOTR ${SOURCE_FILES} main.c)

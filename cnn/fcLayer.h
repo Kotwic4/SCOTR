@@ -2,10 +2,11 @@
 #define SCOTR_FCLAYER_H
 
 #include "layer.h"
+#include "../math/vector.h"
 
 typedef struct{
     LayerType type; // fc
-    Tensor *back,*in,*out,*weights;
+    Tensor *back,*in,*out,*weights,*grad,*oldGrad,*input;
 }FcLayer;
 
 FcLayer* initFcLayer(Point* inSize, int outSize);
