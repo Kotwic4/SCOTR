@@ -1,0 +1,6 @@
+#ifndef SCOTR_FLAT_RELU_LAYER_TEST_H
+#define SCOTR_FLAT_RELU_LAYER_TEST_H
+
+void testFlatReluLayerAll();
+
+#endif //SCOTR_FLATRELU_LAYER_TEST_H

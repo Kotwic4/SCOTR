@@ -1,7 +1,5 @@
 #include <assert.h>
 
-#define DEBUG
-
 #ifdef DEBUG
 
 #define debugAssert(x) assert(x)

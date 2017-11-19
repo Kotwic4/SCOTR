@@ -1,4 +1,3 @@
-
 #ifndef SCOTR_LAYER_H
 #define SCOTR_LAYER_H
 
