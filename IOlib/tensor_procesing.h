@@ -3,19 +3,17 @@
 
 #include <stdio.h>
 #include "../math/tensor.h"
+#include "../math/vector.h"
 
-//using OpenCV library, IplImage structure; H and W is for image size, D is RGB
-Tensor* readImagineToTensor( FILE* imgFile );
+//https://docs.opencv.org/2.4/doc/tutorials/introduction/linux_install/linux_install.html
+Tensor* readImagineToTensor(char* filename);
 
-Tensor* readTensorFromFile( FILE* tensorFile );
+Tensor* readTensorFromFile(FILE* file);
 
-//I could return FILE*, if U need
-void writeTensorToFile( Tensor* tensor, char* filename );
+void writeTensorToFile(Tensor* tensor, FILE* file);
 
-//if U have a better name for that, I'm listening:
-Tensor* convertFirstCNNTensorToSecondCNNTensor( Tensor* firstCNNTensor );
-// ^ I wuold like to add a one dimention to depth and add only two values at the and of tensor
-// it will be a bit wasting a memory, but we will be able to keep our acctual math implementation
+Tensor* addDimensionsToTensor(Tensor* oldT, int n, int k);
 
+Vector* createParamtersTensors(Tensor* rawImage, int n);
 
 #endif //SCOTR_TENSOR_PROCESING_H
