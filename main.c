@@ -4,5 +4,6 @@
 #include "math/point.h"
 
 int main() {
+    testAll();
     return 0;
 }

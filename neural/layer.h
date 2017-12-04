@@ -5,15 +5,21 @@
 #include <malloc.h>
 #include "../math/tensor.h"
 
-typedef enum {conv, fc, relu, pool} LayerType;
+typedef enum {
+    conv, fc, relu, pool
+} LayerType;
 
-typedef struct{
+typedef struct {
     LayerType type;
-    Tensor *back,*in,*out;
-}Layer;
+    Tensor *back, *in, *out;
+} Layer;
 
-void activateLayer(Layer* layer, Tensor* in);
-void backPropLayer(Layer* layer, Tensor* nextLayerBack);
-void freeLayer(Layer* layer);
+void activateLayer(Layer *layer, Tensor *in);
+
+void backPropLayer(Layer *layer, Tensor *nextLayerBack);
+
+void freeLayer(Layer *layer);
+
 int normalizeValue(double x, int max, int flag);
+
 #endif //SCOTR_LAYER_H

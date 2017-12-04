@@ -1,6 +1,6 @@
 #include "neuralTest.h"
 
-void testNeuralAll(){
+void testNeuralAll() {
     testCnnAll();
     testConvLayerAll();
     testFcLayerAll();

@@ -3,7 +3,7 @@
 
 #include "../math/tensor.h"
 
-typedef struct{
-    Tensor *input,*expected;
-}TestCase;
+typedef struct {
+    Tensor *input, *expected;
+} TestCase;
 #endif //SCOTR_TESTCASE_H

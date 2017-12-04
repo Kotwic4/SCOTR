@@ -4,14 +4,18 @@
 #include "layer.h"
 #include <float.h>
 
-typedef struct{
+typedef struct {
     LayerType type; // pool
-    Tensor *back,*in,*out;
+    Tensor *back, *in, *out;
     int stride, spatialExtent;
-}PoolLayer;
+} PoolLayer;
 
-PoolLayer* initPoolLayer(int stride, int spatialExtent, Point* inSize);
-void activatePoolLayer(PoolLayer* poolLayer, Tensor* in);
-void backPropPoolLayer(PoolLayer* poolLayer, Tensor* nextLayerBack);
-void freePoolLayer(PoolLayer* poolLayer);
+PoolLayer *initPoolLayer(int stride, int spatialExtent, Point *inSize);
+
+void activatePoolLayer(PoolLayer *poolLayer, Tensor *in);
+
+void backPropPoolLayer(PoolLayer *poolLayer, Tensor *nextLayerBack);
+
+void freePoolLayer(PoolLayer *poolLayer);
+
 #endif //SCOTR_POOLLAYER_H

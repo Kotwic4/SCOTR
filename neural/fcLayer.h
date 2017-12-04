@@ -4,13 +4,17 @@
 #include "layer.h"
 #include "../math/vector.h"
 
-typedef struct{
+typedef struct {
     LayerType type; // fc
-    Tensor *back,*in,*out,*weights,*grad,*oldGrad,*input;
-}FcLayer;
+    Tensor *back, *in, *out, *weights, *grad, *oldGrad, *input;
+} FcLayer;
 
-FcLayer* initFcLayer(Point* inSize, int outSize);
-void activateFcLayer(FcLayer* fcLayer, Tensor* in);
-void backPropFcLayer(FcLayer* fcLayer, Tensor* nextLayerBack);
-void freeFcLayer(FcLayer* fcLayer);
+FcLayer *initFcLayer(Point *inSize, int outSize);
+
+void activateFcLayer(FcLayer *fcLayer, Tensor *in);
+
+void backPropFcLayer(FcLayer *fcLayer, Tensor *nextLayerBack);
+
+void freeFcLayer(FcLayer *fcLayer);
+
 #endif //SCOTR_FCLAYER_H

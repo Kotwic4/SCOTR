@@ -5,10 +5,10 @@
 #include "reluLayer.h"
 #include "poolLayer.h"
 
-void activateLayer(Layer* layer, Tensor* in){
+void activateLayer(Layer *layer, Tensor *in) {
     debugAssert(layer != NULL);
     debugAssert(in != NULL);
-    switch(layer->type){
+    switch (layer->type) {
         case conv:
             activateConvLayer((ConvLayer *) layer, in);
             break;
@@ -24,10 +24,10 @@ void activateLayer(Layer* layer, Tensor* in){
     }
 }
 
-void backPropLayer(Layer* layer, Tensor* nextLayerBack){
+void backPropLayer(Layer *layer, Tensor *nextLayerBack) {
     debugAssert(layer != NULL);
     debugAssert(nextLayerBack != NULL);
-    switch(layer->type){
+    switch (layer->type) {
         case conv:
             backPropConvLayer((ConvLayer *) layer, nextLayerBack);
             break;
@@ -44,9 +44,9 @@ void backPropLayer(Layer* layer, Tensor* nextLayerBack){
 }
 
 
-void freeLayer(Layer* layer){
+void freeLayer(Layer *layer) {
     debugAssert(layer != NULL);
-    switch(layer->type){
+    switch (layer->type) {
         case conv:
             freeConvLayer((ConvLayer *) layer);
             break;
@@ -62,9 +62,9 @@ void freeLayer(Layer* layer){
     }
 }
 
-int normalizeValue(double x, int max, int flag){
-    if(x <= 0) return 0;
-    if(x >= max) return max;
-    if(flag)return (int) ceil(x);
+int normalizeValue(double x, int max, int flag) {
+    if (x <= 0) return 0;
+    if (x >= max) return max;
+    if (flag)return (int) ceil(x);
     return (int) floor(x);
 }

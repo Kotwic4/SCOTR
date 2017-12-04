@@ -1,16 +1,15 @@
 #include <time.h>
 #include <math.h>
 #include "fcLayer.h"
-#include "testCase.h"
 #include "grad.h"
 
 
-FcLayer* initFcLayer(Point* inSize, int outSize){
+FcLayer *initFcLayer(Point *inSize, int outSize) {
     debugAssert(inSize != NULL);
     srand((unsigned int) time(NULL));
-    FcLayer* fcLayer = malloc(sizeof(fcLayer));
+    FcLayer *fcLayer = malloc(sizeof(fcLayer));
     Point outPoint = {outSize, 1, 1};
-    Point weightSize = {multiplePointParameters(inSize),outSize,1};
+    Point weightSize = {multiplePointParameters(inSize), outSize, 1};
     fcLayer->type = fc;
     fcLayer->in = NULL;
     fcLayer->back = initTensor(inSize);
@@ -20,16 +19,16 @@ FcLayer* initFcLayer(Point* inSize, int outSize){
     fcLayer->input = initTensor(&outPoint);
     fcLayer->weights = initTensor(&weightSize);
 
-    for(int i = 0; i < multiplePointParameters(inSize); i++){
-        *getFasterTensorField(fcLayer->grad,i) = 0;
-        *getFasterTensorField(fcLayer->oldGrad,i) = 0;
+    for (int i = 0; i < multiplePointParameters(inSize); i++) {
+        *getFasterTensorField(fcLayer->grad, i) = 0;
+        *getFasterTensorField(fcLayer->oldGrad, i) = 0;
     }
 
     int max = multiplePointParameters(inSize);
 
-    for(int i = 0; i < outSize; i++){
-        for(int j = 0; j < max; j++){
-            *getTensorField(fcLayer->weights,(Point){j,i,0}) = 2.19722f / max * rand() / (double) RAND_MAX;
+    for (int i = 0; i < outSize; i++) {
+        for (int j = 0; j < max; j++) {
+            *getTensorField(fcLayer->weights, (Point) {j, i, 0}) = 2.19722f / max * rand() / (double) RAND_MAX;
         }
     }
 
@@ -37,56 +36,57 @@ FcLayer* initFcLayer(Point* inSize, int outSize){
     return fcLayer;
 }
 
-double activatorFuntion(double value){
+double activatorFuntion(double value) {
     return 1.0f / (1.0f + exp(-value));
 }
 
-double activatorDerivative(double value){
+double activatorDerivative(double value) {
     double sig = activatorFuntion(value);
-    return sig * (1-sig);
+    return sig * (1 - sig);
 }
 
-void activateFcLayer(FcLayer* fcLayer, Tensor* in){
+void activateFcLayer(FcLayer *fcLayer, Tensor *in) {
     fcLayer->in = in;
-    for(int n = 0; n < fcLayer->in->size->H; n++){
+    for (int n = 0; n < fcLayer->in->size->H; n++) {
         double inputValue = 0;
-        for(int i = 0; i < fcLayer->in->size->H; i++){
-            for(int j = 0; j< fcLayer->in->size->W; j++){
-                for(int k = 0; fcLayer->in->size->D; k++){
-                    Point point = {i,j,k};
-                    double inValue = *getTensorField(fcLayer->in,point);
-                    int index = convertPointToIndex(point,*in->size);
-                    double weight = *getTensorField(fcLayer->weights,(Point){index,n,0});
+        for (int i = 0; i < fcLayer->in->size->H; i++) {
+            for (int j = 0; j < fcLayer->in->size->W; j++) {
+                for (int k = 0; fcLayer->in->size->D; k++) {
+                    Point point = {i, j, k};
+                    double inValue = *getTensorField(fcLayer->in, point);
+                    int index = convertPointToIndex(point, *in->size);
+                    double weight = *getTensorField(fcLayer->weights, (Point) {index, n, 0});
                     inputValue += inValue * weight;
                 }
             }
         }
-        *getTensorField(fcLayer->input,(Point){n,0,0}) = inputValue;
-        *getTensorField(fcLayer->out,(Point){n,0,0}) = activatorFuntion(inputValue);
+        *getTensorField(fcLayer->input, (Point) {n, 0, 0}) = inputValue;
+        *getTensorField(fcLayer->out, (Point) {n, 0, 0}) = activatorFuntion(inputValue);
 
     }
 }
-void backPropFcLayer(FcLayer* fcLayer, Tensor* nextLayerBack){
 
-    for(int i = 0; i < fcLayer->in->size->H; i++){
-        for(int j = 0; j< fcLayer->in->size->W; j++){
-            for(int k = 0; fcLayer->in->size->D; k++){
-                *getTensorField(fcLayer->back,(Point){i,j,k}) = 0;
+void backPropFcLayer(FcLayer *fcLayer, Tensor *nextLayerBack) {
+
+    for (int i = 0; i < fcLayer->in->size->H; i++) {
+        for (int j = 0; j < fcLayer->in->size->W; j++) {
+            for (int k = 0; fcLayer->in->size->D; k++) {
+                *getTensorField(fcLayer->back, (Point) {i, j, k}) = 0;
             }
         }
     }
 
-    for(int n = 0; n < fcLayer->out->size->H; n++){
-        double inputValue = *getTensorField(fcLayer->input,(Point){n,0,0});
-        double grad = *getTensorField(nextLayerBack,(Point){n,0,0}) * inputValue;
-        *getTensorField(fcLayer->grad, (Point){n,0,0}) = grad;
-        for(int i = 0; i < fcLayer->in->size->H; i++){
-            for(int j = 0; j< fcLayer->in->size->W; j++){
-                for(int k = 0; fcLayer->in->size->D; k++){
-                    Point point = {i,j,k};
-                    int index = convertPointToIndex(point,*fcLayer->in->size);
-                    double weight = *getTensorField(fcLayer->weights,(Point){index,n,0});
-                    *getTensorField(fcLayer->back,point) += grad * weight;
+    for (int n = 0; n < fcLayer->out->size->H; n++) {
+        double inputValue = *getTensorField(fcLayer->input, (Point) {n, 0, 0});
+        double grad = *getTensorField(nextLayerBack, (Point) {n, 0, 0}) * inputValue;
+        *getTensorField(fcLayer->grad, (Point) {n, 0, 0}) = grad;
+        for (int i = 0; i < fcLayer->in->size->H; i++) {
+            for (int j = 0; j < fcLayer->in->size->W; j++) {
+                for (int k = 0; fcLayer->in->size->D; k++) {
+                    Point point = {i, j, k};
+                    int index = convertPointToIndex(point, *fcLayer->in->size);
+                    double weight = *getTensorField(fcLayer->weights, (Point) {index, n, 0});
+                    *getTensorField(fcLayer->back, point) += grad * weight;
                 }
             }
         }
@@ -94,24 +94,26 @@ void backPropFcLayer(FcLayer* fcLayer, Tensor* nextLayerBack){
     }
 
 
-    for(int n = 0; n < fcLayer->out->size->H; n++){
-        double grad = *getTensorField(fcLayer->grad, (Point){n,0,0});
-        double oldGrad = *getTensorField(fcLayer->oldGrad, (Point){n,0,0});
-        for(int i = 0; i < fcLayer->in->size->H; i++){
-            for(int j = 0; j< fcLayer->in->size->W; j++){
-                for(int k = 0; fcLayer->in->size->D; k++){
-                    Point point = {i,j,k};
-                    double inValue = *getTensorField(fcLayer->in,point);
-                    int index = convertPointToIndex(point,*fcLayer->in->size);
-                    double weight = *getTensorField(fcLayer->weights,(Point){index,n,0});
-                    *getTensorField(fcLayer->weights,(Point){index,n,0}) = updateWeight(weight,grad,oldGrad,inValue);
+    for (int n = 0; n < fcLayer->out->size->H; n++) {
+        double grad = *getTensorField(fcLayer->grad, (Point) {n, 0, 0});
+        double oldGrad = *getTensorField(fcLayer->oldGrad, (Point) {n, 0, 0});
+        for (int i = 0; i < fcLayer->in->size->H; i++) {
+            for (int j = 0; j < fcLayer->in->size->W; j++) {
+                for (int k = 0; fcLayer->in->size->D; k++) {
+                    Point point = {i, j, k};
+                    double inValue = *getTensorField(fcLayer->in, point);
+                    int index = convertPointToIndex(point, *fcLayer->in->size);
+                    double weight = *getTensorField(fcLayer->weights, (Point) {index, n, 0});
+                    *getTensorField(fcLayer->weights, (Point) {index, n, 0}) = updateWeight(weight, grad, oldGrad,
+                                                                                            inValue);
                 }
             }
         }
-        *getTensorField(fcLayer->oldGrad, (Point){n,0,0}) = updateGradient(grad,oldGrad);
+        *getTensorField(fcLayer->oldGrad, (Point) {n, 0, 0}) = updateGradient(grad, oldGrad);
     }
 }
-void freeFcLayer(FcLayer* fcLayer){
+
+void freeFcLayer(FcLayer *fcLayer) {
     debugAssert(fcLayer != NULL);
     freeTensor(fcLayer->back);
     freeTensor(fcLayer->out);
