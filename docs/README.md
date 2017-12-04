@@ -122,19 +122,31 @@ Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
 
 Model bedzie postaci:
 ```
-INPUT -> [[CONV -> RELU]*N -> POOL?]*M -> [FC -> FC_RELU]*K -> FC -> OUT | N,M,K >= 0
+INPUT -> [[CONV -> RELU]*N -> POOL?]*M -> [FC -> FC_RELU]*K -> FC -> OUTPUT | N,M,K >= 0
 ```
-
-Ponieważ nasza sięc neuronowa bedzie się stosunkowo długo uczyć zastosujemy najprawdopodobniej jedna z możliwości:
-* N = M = K = 1
-* N = 2, M = K = 1
-* N = K = 1, M = 2
 
 ## Model pierwszej CNN
 
+N = 1 , M = 2, K =1
+
 ```
-INPUT -> CONV -> RELU -> POOL -> CONV -> RELU -> POOL -> FC -> FC_RELU -> FC -> OUT
+INPUT -> CONV -> RELU -> POOL -> CONV -> RELU -> POOL -> FC -> FC_RELU -> FC -> OUTPUT
+INPUT[200x100x3]
+CONV(stride = 1,spatialExtent = 5,padding = 2, filter =10)[200x100x10]
+RELU[200x100x10]
+POOL(stride = 2,spatialExtent = 2)[100x50x10]
+CONV(stride = 1,spatialExtent = 3,padding = 1, filter =10)[100x50x10]
+RELU[100x50x10]
+POOL(stride = 2,spatialExtent = 2)[50x25x10]
+FC[80,1,1]
+FC_RELU[80,1,1]
+FC[10,1,1]
+OUTPUT[10,1,1]
 ```
+
+## Model drugiej CNN
+
+N = 2, M = 3, K = 2
     
 ## Bibloteki
 
