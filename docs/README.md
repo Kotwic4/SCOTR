@@ -143,6 +143,7 @@ FC_RELU[80,1,1]
 FC[10,1,1]
 OUTPUT[10,1,1]
 ```
+![cnnFirstPlan](imgs/cnnFirstPlan.png)
 
 ## Model drugiej CNN
 
