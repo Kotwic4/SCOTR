@@ -71,28 +71,54 @@ Etap będzie polegał na dodawaniu dodatkowych funkcjonalnosći.
 
 ![neuronModel](imgs/neuronActivation.jpeg)
 
-### FC vs CNN
+### Fully-Connected
 
 ![fcShema](imgs/fcShema.jpeg)
+
+#### Parametry
+* Rozmiar poprzedniej warstwy
+* Ilość neuronów
+
+### Convolutional Neural Networks (CNNs / ConvNets)
+
 ![cnnShema](imgs/cnnShema.jpeg)
 
-### Warstwa Conv
+### Convolutional
 
 ![convAnalize](imgs/convAnalize.jpeg)
 ![convInAction](imgs/convInAction.PNG)
 
-### Warstwa Relu
+Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
+
+#### Parametry
+* Rozmiar poprzedniej warstwy
+* Stride (przesuniecie filtra)
+* SpatialExtent (rozmiar filtra)
+* Padding (zwiekszenie zerami)
+* Ilość filtrów
+
+### Rectified Linear Unit
 
 ![relu](imgs/relu.png)
 
-### Warstwa Pool
+#### Parametry
+* Rozmiar poprzedniej warstwy
+
+### Pooling
 
 ![pool](imgs/pool.jpeg)
 ![pool](imgs/poolAction.jpeg)
 
+#### Parametry
+* Rozmiar poprzedniej warstwy
+* Stride (przesuniecie filtra)
+* SpatialExtent (rozmiar filtra)
+
 ### CNN in action
 
 ![cnnExample](imgs/cnnExample.jpeg)
+
+### Schemat budowy
 
 Model bedzie postaci:
 ```
@@ -103,6 +129,12 @@ Ponieważ nasza sięc neuronowa bedzie się stosunkowo długo uczyć zastosujemy
 * N = M = K = 1
 * N = 2, M = K = 1
 * N = K = 1, M = 2
+
+## Model pierwszej CNN
+
+```
+INPUT -> CONV -> RELU -> POOL -> CONV -> RELU -> POOL -> FC -> FC_RELU -> FC -> OUT
+```
     
 ## Bibloteki
 
