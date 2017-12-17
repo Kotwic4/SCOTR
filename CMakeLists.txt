@@ -59,3 +59,4 @@ set(SOURCE_FILES
         src/IOlib/tensor_procesing.c
         src/IOlib/stb_image.h)
 add_executable(SCOTR ${SOURCE_FILES} src/main.c)
+target_link_libraries(SCOTR m)

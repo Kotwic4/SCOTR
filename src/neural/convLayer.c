@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "convLayer.h"
 #include "grad.h"
 
