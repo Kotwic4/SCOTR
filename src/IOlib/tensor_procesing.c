@@ -76,16 +76,9 @@ Vector* createParamtersTensors(Tensor* rawImage, int n){
 Tensor* returnOutputTensor(int n, int k){
     Point point = {n, 1, 1};
     Tensor* tensor = initTensor(&point);
-    double* tmp;
-    double zero = 0;
     for(int i = 0; i < multiplePointParameters(&point); i++){
-        tmp = getFasterTensorField(tensor, i);
-        tmp =  &zero;
+        *getFasterTensorField(tensor, i)=0;
     }
-    double one = 1;
-    point.H = k;
-    point.D = point.W = 0;
-    tmp = getTensorField(tensor, point);
-    tmp = &one;
+    *getFasterTensorField(tensor, k)=1;
     return tensor;
 }
