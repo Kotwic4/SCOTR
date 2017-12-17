@@ -4,7 +4,6 @@
 #include "cnnTest.h"
 #include "convLayerTest.h"
 #include "fcLayerTest.h"
-#include "flatReluLayerTest.h"
 #include "reluLayerTest.h"
 #include "gradTest.h"
 #include "layerTest.h"

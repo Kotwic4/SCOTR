@@ -6,10 +6,11 @@ ConvLayer *initConvLayer(int stride, int spatialExtent, int padding, int filters
     debugAssert(inSize != NULL);
     debugAssert((inSize->H - spatialExtent + 2 * padding) % stride == 0);
     debugAssert((inSize->W - spatialExtent + 2 * padding) % stride == 0);
-    int w = (inSize->W - spatialExtent + 2 * padding) / stride + 1;
-    int h = (inSize->H - spatialExtent + 2 * padding) / stride + 1;
-    Point outSize = {w, h, filtersNumber};
-    ConvLayer *convLayer = malloc(sizeof(convLayer));
+    Point outSize;
+    outSize.W = (inSize->W - spatialExtent + 2 * padding) / stride + 1;
+    outSize.H = (inSize->H - spatialExtent + 2 * padding) / stride + 1;
+    outSize.D = filtersNumber;
+    ConvLayer *convLayer = malloc(sizeof(ConvLayer));
     convLayer->type = conv;
     convLayer->in = NULL;
     convLayer->out = initTensor(&outSize);

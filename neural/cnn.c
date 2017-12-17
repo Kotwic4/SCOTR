@@ -56,7 +56,7 @@ void addLayer(Cnn *cnn, Layer *layer) {
 }
 
 void addConvLayer(Cnn *cnn, int stride, int spatialExtent, int filtersNumber, int padding) {
-    ConvLayer *convLayer = initConvLayer(stride, spatialExtent, filtersNumber, padding, getCnnOutSize(cnn));
+    ConvLayer *convLayer = initConvLayer(stride, spatialExtent, padding, filtersNumber, getCnnOutSize(cnn));
     addLayer(cnn, (Layer *) convLayer);
 }
 

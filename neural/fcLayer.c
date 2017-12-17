@@ -2,11 +2,12 @@
 #include <math.h>
 #include "fcLayer.h"
 #include "grad.h"
+#include "testCase.h"
 
 
 FcLayer *initFcLayer(Point *inSize, int outSize) {
     debugAssert(inSize != NULL);
-    FcLayer *fcLayer = malloc(sizeof(fcLayer));
+    FcLayer *fcLayer = malloc(sizeof(FcLayer));
     Point outPoint = {outSize, 1, 1};
     Point weightSize = {multiplePointParameters(inSize), outSize, 1};
     fcLayer->type = fc;
@@ -46,7 +47,7 @@ double activatorDerivative(double value) {
 
 void activateFcLayer(FcLayer *fcLayer, Tensor *in) {
     fcLayer->in = in;
-    for (int n = 0; n < fcLayer->in->size->H; n++) {
+    for (int n = 0; n < fcLayer->out->size->H; n++) {
         double inputValue = 0;
         for (int i = 0; i < fcLayer->in->size->H; i++) {
             for (int j = 0; j < fcLayer->in->size->W; j++) {

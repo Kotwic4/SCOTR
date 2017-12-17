@@ -47,8 +47,6 @@ set(SOURCE_FILES
         tests/neural/neuralTest.h
         tests/neural/convLayerTest.c
         tests/neural/convLayerTest.h
-        tests/neural/flatReluLayerTest.c
-        tests/neural/flatReluLayerTest.h
         tests/neural/gradTest.c
         tests/neural/gradTest.h
         tests/neural/layerTest.c
