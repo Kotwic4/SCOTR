@@ -1,5 +1,6 @@
 #include <time.h>
 #include <math.h>
+#include <stdlib.h>
 #include "fcLayer.h"
 #include "grad.h"
 #include "testCase.h"
