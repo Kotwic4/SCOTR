@@ -13,13 +13,13 @@ FcLayer *initFcLayer(Point *inSize, int outSize) {
     fcLayer->type = fc;
     fcLayer->in = NULL;
     fcLayer->back = initTensor(inSize);
-    fcLayer->grad = initTensor(inSize);
-    fcLayer->oldGrad = initTensor(inSize);
+    fcLayer->grad = initTensor(&outPoint);
+    fcLayer->oldGrad = initTensor(&outPoint);
     fcLayer->out = initTensor(&outPoint);
     fcLayer->input = initTensor(&outPoint);
     fcLayer->weights = initTensor(&weightSize);
 
-    for (int i = 0; i < multiplePointParameters(inSize); i++) {
+    for (int i = 0; i < multiplePointParameters(&outPoint); i++) {
         *getFasterTensorField(fcLayer->grad, i) = 0;
         *getFasterTensorField(fcLayer->oldGrad, i) = 0;
     }

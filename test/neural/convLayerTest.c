@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "convLayerTest.h"
-#include "../../math/point.h"
-#include "../../math/tensor.h"
-#include "../../neural/convLayer.h"
+#include "../../src/math/point.h"
+#include "../../src/math/tensor.h"
+#include "../../src/neural/convLayer.h"
 
 void testInitConvLayer(){
     //todo

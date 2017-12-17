@@ -2,7 +2,7 @@
 #define SCOTR_RELU_LAYER_TEST_H
 
 #include <assert.h>
-#include "../../neural/reluLayer.h"
+#include "../../src/neural/reluLayer.h"
 
 void testReluLayerAll();
 
