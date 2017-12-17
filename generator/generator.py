@@ -25,8 +25,9 @@ def generate_test(how_match):
     for x in range(how_match):
         s = ''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(1, MAX)))
         fun = random.choice([generate_image_captcha, generate_image_claptcha])
-        fun(s, str(x)+'.png')
-        f.write(s + '\n')
+        filename = str(x)+'.png'
+        fun(s, filename)
+        f.write(filename + " " + s + '\n')
     f.close()
 
 

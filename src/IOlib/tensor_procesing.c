@@ -1,32 +1,31 @@
 #include <stdio.h>
-#include <opencv-3.3.1/modules/imgcodecs/include/opencv2/imgcodecs/imgcodecs_c.h>
-#include <opencv-3.3.1/include/opencv/highgui.h>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 #include "../math/tensor.h"
-#include "../math/point.h"
 #include "../math/vector.h"
 
-
 Tensor* readImagineToTensor( char* filename ){
-    IplImage* pImg = cvLoadImage( filename, CV_LOAD_IMAGE_COLOR);
-    Point point = {pImg->width, pImg->height, 3};
+    int width,height,nChannels;
+    unsigned char *data = stbi_load(filename, &width, &height, &nChannels, 0);
+    Point point = {width, height, nChannels};
     Tensor* tensor = initTensor(&point);
     int col, row, colour;
-    for( row = 0; row < pImg->height; row++ )
+    for( row = 0; row < height; row++ )
     {
-        for ( col = 0; col < pImg->width; col++ )
+        for ( col = 0; col < width; col++ )
         {
-            for( colour = 0; colour < pImg->nChannels; colour++ )
+            for( colour = 0; colour < nChannels; colour++ )
             {
                 point.H = row;
                 point.W = col;
                 point.D = colour;
-                int arrind = pImg->widthStep * row + col * pImg->nChannels + colour;
-                tensor->data[multiplePointParameters(&point)] = pImg->imageData[arrind];
+                int dataIndex = colour + col * nChannels + row * width * nChannels;
+                tensor->data[multiplePointParameters(&point)] = data[dataIndex];
             }
         }
 
     }
-    cvReleaseImage(&pImg);
+    stbi_image_free(data);
     return tensor;
 }
 

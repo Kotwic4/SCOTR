@@ -3,7 +3,7 @@
 
 #include <assert.h>
 #include <malloc.h>
-#include "../../math/point.h"
+#include "../../src/math/point.h"
 
 void testPointAll();
 

@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <time.h>
+#include <stdlib.h>
 #include "cnnTest.h"
-#include "../../neural/cnn.h"
+#include "../../src/math/point.h"
+#include "../../src/neural/cnn.h"
+#include "../../src/math/tensor.h"
 
 void testCnnAll(){
     srand(time(NULL));

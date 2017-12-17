@@ -1,6 +1,6 @@
 #include "tests.h"
 
 void testAll(){
-    //testMathAll();
+    testMathAll();
     testNeuralAll();
 }

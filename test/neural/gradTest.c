@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "gradTest.h"
-#include "../../neural/grad.h"
+#include "../../src/neural/grad.h"
 
 void assertDoubleEquals(double value, double value2){
     double e = 0.00000001;
