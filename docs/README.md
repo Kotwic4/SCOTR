@@ -12,11 +12,11 @@ Program na wejściu bedzie otrzymywał zdjęcie w postaci bitmapy.
 
 ### Działanie
 
-Program bedzie skłądał się z dwóch sięci neuronowych które bedą miały poniższe role:
-* Analiza z ilu znaków skłąda się słowo wejściowe w zakresie od 0 do _N_, gdzie N = 10.
-* Analiza jaki znak jest na _i_-tej pozycji słowa o długości _n_.
+Program bedzie składał się z dwóch sięci neuronowych, które bedą miały poniższe role:
+* Analiza z ilu znaków składa się słowo wejściowe w zakresie od 0 do _N_, gdzie N = 10.
+* Analiza jaki znak jest na _i_-tej pozycji słowa o długości _N_.
 
-Tym samym algorytm bedzie polegał na tym żeby podać wejsciowy obrazek do pierwszej sieci i ustalenie liczby _n_. Następnie w pętli dla _i_ = 1 do _i_ = _n_ bedziemy pytać drugiej sięci jaki znak znajduje się na _i_-tej pozycji słowa. Odczytane znaki zostaną połączone w słowo. 
+Tym samym algorytm bedzie polegał na tym żeby podać wejsciowy obrazek do pierwszej sieci i ustalenie liczby _N_. Następnie w pętli dla _i_ = 1 do _i_ = _N_ bedziemy pytać drugiej sięci jaki znak znajduje się na _i_-tej pozycji słowa. Odczytane znaki zostaną połączone w słowo. 
 
 ### Wyjście
 
@@ -24,8 +24,8 @@ Wypisanie w konsoli odczytanego słowa, które znajduje się na wejściowym zdje
 
 ### Możliwe roszerzenia
 
-* Obsługa zdjeć w róznych rozdzielczości.  
-Zdjecią były preprocesowane w celu przeskalowaniu zdjećia do formatu który przyjmuje na wejście CNN.
+* Obsługa zdjeć w różnych rozdzielczościach.  
+Zdjecia byłyby preprocesowane w celu przeskalowania zdjęcia do formatu, który przyjmuje na wejście CNN.
 * Odczytywanie tekstu a nie słów.  
 Ze zdjecia zostaną wyizolowane i przekazane podstawowemu projektowi pojedyncze słowa. Na wyjściu zostanie wyświetlony odczytany tekst jako połaczenie słów odczytanych przez bazowy program. => Większy preprocesing i postprocesing.
 * Rozpoznawanie pisma recznie napisanego  
@@ -38,7 +38,7 @@ Możemy zwiekszyć maksymalną długość wejściowego słowa _N_ do np 100. => 
 
 ## Plan projektu
 
-Plan ma charakter orientacyjny i bedzię zmieniany w trakcie realizacji projektu.
+Plan ma charakter orientacyjny i może być zmieniany w trakcie realizacji projektu.
 
 1. Wiedza teoretyczna  
 Zdobycie wiedzy teoretyczniej potrzebnej do implementacji projektu. W tym:
@@ -46,17 +46,17 @@ Zdobycie wiedzy teoretyczniej potrzebnej do implementacji projektu. W tym:
     2. Zapoznanie się z literaturą.
     3. Zdefiniowanie specyfikacji projektu na postawie zdobytej wiedzy.
 2. Przygotowanie narzędzi  
-Napisaniu zestawu narzędzi:
+Napisanie zestawu narzędzi:
    1. Bibloteka matematyczna
    2. Bibloteka CNN
-   3. Bibloteka do parsowania plików graficznych
-   4. Generator danych testowych ( python? )
+   3. Bibloteka do parsowania plików graficznych ( IOlib )
+   4. Generator danych testowych ( python )
 3. Realizacja pierwszej CNN  
-Stworzenie i wytrenowanej sieci, która rozpoznaje liczbę znaków podaną na zdjęciu.
+Stworzenie i wytrenowanie sieci, która rozpoznaje liczbę znaków podaną na zdjęciu.
 4. Realizaja drugiej CNN  
-Stworzenie sieci, która jest wstanie podać znak na podstawie bitmapy słowa i jego pozycji w tym słowie.
+Stworzenie sieci, która jest w stanie podać znak na podstawie bitmapy słowa i jego pozycji w tym słowie.
 5. Połączenie w całość  
-Połaczenie dwoch sieci neuronowych w jeden program, tak aby spełniał specyfikacje.
+Połaczenie dwoch sieci neuronowych w jeden program tak, aby spełniał specyfikacje.
 6. Realizowanie roszerzenie projektu  
 Etap będzie polegał na dodawaniu dodatkowych funkcjonalnosći.
 
@@ -71,6 +71,10 @@ Etap będzie polegał na dodawaniu dodatkowych funkcjonalnosći.
 
 ![neuronModel](imgs/neuronActivation.jpeg)
 
+### Convolutional Neural Networks (CNNs / ConvNets)
+
+![cnnShema](imgs/cnnShema.jpeg)
+
 ### Fully-Connected
 
 ![fcShema](imgs/fcShema.jpeg)
@@ -78,10 +82,6 @@ Etap będzie polegał na dodawaniu dodatkowych funkcjonalnosći.
 #### Parametry
 * Rozmiar poprzedniej warstwy
 * Ilość neuronów
-
-### Convolutional Neural Networks (CNNs / ConvNets)
-
-![cnnShema](imgs/cnnShema.jpeg)
 
 ### Convolutional
 
@@ -151,5 +151,5 @@ N = 2, M = 3, K = 2
     
 ## Bibloteki
 
-Bibloteki będa napisana w jezyku C bez użycia zewnętrznych biblotek, aby program był łatwo przenaszalny miedzy platformami. Poniżej zostały opisane mniej więcej struktura biblotek.
+Bibloteka CNN i matematyczna będą napisane w jezyku C bez użycia zewnętrznych biblotek, aby program był łatwo przenaszalny miedzy platformami.
 
