@@ -12,15 +12,15 @@ int main() {
     addConvLayer(cnn,1,5,10,2);
     addReluLayer(cnn);
     addPoolLayer(cnn,2,2);
-    addConvLayer(cnn,1,3,10,1);
-    addReluLayer(cnn);
-    addPoolLayer(cnn,2,2);
-    addFcLayer(cnn,80);
-    addReluLayer(cnn);
+//    addConvLayer(cnn,1,3,10,1);
+//    addReluLayer(cnn);
+//    addPoolLayer(cnn,2,2);
     addFcLayer(cnn,10);
+//    addReluLayer(cnn);
+//    addFcLayer(cnn,10);
     FILE * file;
-#define N 10 //case number
-#define M 10 //iteration number
+#define N 100 //case number
+#define M 100 //iteration number
     char buff[255];
     char buff2[255];
     TestCase testCase[N];
@@ -49,7 +49,7 @@ int main() {
     }
     for(int i = 0; i < N; i++){
         printf("\n%d ", i);
-        Tensor * in = testCase[0].input;
+        Tensor * in = testCase[i].input;
         Tensor * out = getForward(cnn,in);
         for(int k = 0; k < 10; k++){
             printf("[%d] : %lf ", k+1, *getFasterTensorField(out,k));
@@ -59,5 +59,20 @@ int main() {
         freeTensor(testCase[i].input);
         freeTensor(testCase[i].expected);
     }
+
+    //repl
+    while(scanf("%s",buff)){
+        if(strcmp(buff,"quit")==0){
+            break;
+        }
+        Tensor * in = readImagineToTensor(buff);
+        Tensor * out = getForward(cnn,in);
+        for(int k = 0; k < 10; k++){
+            printf("[%d] : %lf\n", k+1, *getFasterTensorField(out,k));
+        }
+        freeTensor(in);
+        freeTensor(out);
+    }
+    freeCnn(cnn);
     return 0;
 }
