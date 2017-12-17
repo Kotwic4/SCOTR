@@ -19,37 +19,43 @@ int main() {
     addReluLayer(cnn);
     addFcLayer(cnn,10);
     FILE * file;
-#define N  10
-    char buff[N][255];
-    char buff2[N][255];
+#define N 10 //case number
+#define M 10 //iteration number
+    char buff[255];
+    char buff2[255];
     TestCase testCase[N];
     file = fopen("results.txt", "r");
-    for(int i = 0; i < 1; i++){
-        fscanf(file,"%s %s\n",buff[i],buff2[i]);
-        Tensor * in = readImagineToTensor(buff[i]);
-        int k = strlen(buff2[i]);
-        printf("%d\n", k);
+    for(int i = 0; i < N; i++){
+        fscanf(file,"%s %s\n",buff,buff2);
+        Tensor * in = readImagineToTensor(buff);
+        int k = strlen(buff2);
         Tensor * back = returnOutputTensor(10,k-1);
-        for(int a = 0; a < 10; a++){
-            printf("%lf ", *getFasterTensorField(back,a));
-        }
         testCase[i].input = in;
         testCase[i].expected = back;
     }
     fclose(file);
-    for(int i = 0; i < 10000; i++){
+    for(int i = 0; i < M; i++){
         printf("%d\n", i);
-        for(int j = 0; j < 1; j++){
+        for(int j = 0; j < N; j++){
             printf("%d %d\n", i, j);
             train(cnn,&testCase[j]);
         }
         Tensor * in = testCase[0].input;
         Tensor * out = getForward(cnn,in);
         for(int k = 0; k < 10; k++){
-            printf("%lf\n", *getFasterTensorField(out,k));
+            printf("[%d] : %lf ", k+1, *getFasterTensorField(out,k));
+        }
+        printf("\n");
+    }
+    for(int i = 0; i < N; i++){
+        printf("\n%d ", i);
+        Tensor * in = testCase[0].input;
+        Tensor * out = getForward(cnn,in);
+        for(int k = 0; k < 10; k++){
+            printf("[%d] : %lf ", k+1, *getFasterTensorField(out,k));
         }
     }
-    for(int i = 0; i< 10; i++){
+    for(int i = 0; i< N; i++){
         freeTensor(testCase[i].input);
         freeTensor(testCase[i].expected);
     }

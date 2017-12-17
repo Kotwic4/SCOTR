@@ -5,7 +5,7 @@ import random
 WIDTH = 200
 HEIGHT = 100
 MAX = 10
-CASES = 10
+CASES = 100
 RESULT_FILE = "results.txt"
 FONT = "./orange.ttf"
 
