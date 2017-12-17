@@ -37,8 +37,6 @@ set(SOURCE_FILES
         tests/math/vectorTest.h
         tests/math/tensorTest.c
         tests/math/tensorTest.h
-        neural/flatReluLayer.c
-        neural/flatReluLayer.h
         tests/neural/cnnTest.c
         tests/neural/cnnTest.h
         tests/neural/fcLayerTest.c
