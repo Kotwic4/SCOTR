@@ -39,7 +39,7 @@ Tensor* addTensor(Tensor* a, Tensor* b){
 Tensor* subTensor(Tensor* a, Tensor* b){
     int Ia = multiplePointParameters(a->size);
     int Ib = multiplePointParameters(b->size);
-    if (Ia < Ib){
+    if (Ia != Ib){
         fprintf(stderr, "subTensor error: size of tensor a is not equal size of tensor b\n");
         return NULL;
     }
@@ -62,7 +62,9 @@ double* getFasterTensorField(Tensor* tensor, int index){
 }
 
 void freeTensor(Tensor* tensor){
-    free(tensor->data);
-    free(tensor->size);
+    if (tensor != NULL){
+        free(tensor->data);
+        free(tensor->size);
+    }
     free(tensor);
 }

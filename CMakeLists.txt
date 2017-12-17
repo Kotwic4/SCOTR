@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 project(SCOTR)
 
+find_package(OpenCV REQUIRED)
+
 set(CMAKE_C_STANDARD 99)
 
 set(SOURCE_FILES
@@ -52,5 +54,12 @@ set(SOURCE_FILES
         tests/neural/layerTest.c
         tests/neural/layerTest.h
         tests/neural/reluLayerTest.c
-        tests/neural/reluLayerTest.h)
+        tests/neural/reluLayerTest.h
+        IOlib/tensor_procesing.h
+        IOlib/tensor_procesing.c)
 add_executable(SCOTR ${SOURCE_FILES} main.c)
+
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_link_libraries(SCOTR ${OpenCV_LIBS})
+
+add_definitions(-O4 -g)
