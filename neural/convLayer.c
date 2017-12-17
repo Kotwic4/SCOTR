@@ -1,4 +1,3 @@
-#include <time.h>
 #include "convLayer.h"
 #include "grad.h"
 
@@ -20,7 +19,6 @@ ConvLayer *initConvLayer(int stride, int spatialExtent, int padding, int filters
     convLayer->filters = initVector(0);
     convLayer->filtersOldGrad = initVector(0);
     convLayer->filtersGrad = initVector(0);
-    srand((unsigned int) time(NULL));
     for (int i = 0; i < filtersNumber; i++) {
         Point filterSize = {spatialExtent, spatialExtent, inSize->D};
         Tensor *filter = initTensor(&filterSize);
@@ -93,7 +91,7 @@ void backPropConvLayer(ConvLayer *convLayer, Tensor *nextLayerBack) {
 
     for (int i = 0; i < inSize.H; i++) {
         for (int j = 0; j < inSize.W; j++) {
-            for (int k = 0; inSize.D; k++) {
+            for (int k = 0; k < inSize.D; k++) {
                 int x_min = normalizeValue((i + padding - spatialExtent + 1) / stride, outSize.H - 1, 1);
                 int x_max = normalizeValue((i + padding) / stride, outSize.H - 1, 0);
                 int y_min = normalizeValue((j + padding - spatialExtent + 1) / stride, outSize.W - 1, 1);
