@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <time.h>
-#include <mem.h>
+#include <string.h>
 #include "IOlib/tensor_procesing.h"
 #include "neural/cnn.h"
+#include "neural/testCase.h"
 
 int main() {
     srand(time(NULL));
@@ -18,31 +19,35 @@ int main() {
     addReluLayer(cnn);
     addFcLayer(cnn,10);
     FILE * file;
+#define N  10
+    char buff[N][255];
+    char buff2[N][255];
+    TestCase testCase[N];
     file = fopen("results.txt", "r");
-    char buff[255];
-    char buff2[255];
-    while(fscanf(file,"%s %s\n",buff,buff2) == 2){
-        printf("%s, %s\n", buff,buff2);
-        Tensor * in = readImagineToTensor(buff);
-        int k = strlen(buff2);
-        Tensor * back = returnOutputTensor(10,k-1);
-        TestCase testCase = {in,back};
-        train(cnn,&testCase);
-        freeTensor(in);
-        freeTensor(back);
-    }
-    fclose(file);
-    file = fopen("results.txt","r");
-    fscanf(file,"%s %s\n",buff,buff2);
-    printf("%s, %s\n", buff,buff2);
-    Tensor * in = readImagineToTensor(buff);
-    int k = strlen(buff2);
-    Tensor * out = getForward(cnn,in);
     for(int i = 0; i < 10; i++){
-        printf("%lf\n", *getFasterTensorField(out,i));
+        fscanf(file,"%s %s\n",buff[i],buff2[i]);
+        Tensor * in = readImagineToTensor(buff[i]);
+        int k = strlen(buff2[i]);
+        Tensor * back = returnOutputTensor(10,k-1);
+        testCase[i].input = in;
+        testCase[i].expected = back;
     }
-    freeTensor(in);
     fclose(file);
-//
+    for(int i = 0; i < 100; i++){
+        printf("%d\n", i);
+        for(int j = 0; j < 1; j++){
+            printf("%d %d\n", i, j);
+            train(cnn,&testCase[j]);
+        }
+        Tensor * in = testCase[0].input;
+        Tensor * out = getForward(cnn,in);
+        for(int k = 0; k < 10; k++){
+            printf("%lf\n", *getFasterTensorField(out,k));
+        }
+    }
+    for(int i = 0; i< 10; i++){
+        freeTensor(testCase[i].input);
+        freeTensor(testCase[i].expected);
+    }
     return 0;
 }
