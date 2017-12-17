@@ -9,12 +9,18 @@ Vector* initVector(int size){
         fprintf(stderr, "initVector error: size can't be negative\n");
         return NULL;
     }
-    thisVector->data = calloc((size_t) size, sizeof(void*));
-    if(!thisVector->data){
-        fprintf(stderr, "initVector error: calloc function error\n");
+    if(size == 0){
+        thisVector->data = NULL;
         thisVector->size = 0;
-    } else {
-        thisVector->size = size;
+    }
+    else{
+        thisVector->data = calloc((size_t) size, sizeof(void*));
+        if(!thisVector->data){
+            fprintf(stderr, "initVector error: calloc function error\n");
+            thisVector->size = 0;
+        } else {
+            thisVector->size = size;
+        }
     }
     return thisVector;
 }
