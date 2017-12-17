@@ -20,24 +20,21 @@ Tensor* readImagineToTensor( char* filename ){
                 point.H = row;
                 point.W = col;
                 point.D = colour;
-//                point = {row, col, colour};
-                tensor->data[multiplePointParameters(&point)] = pImg->imageData[pImg->widthStep * row + col * pImg->nChannels + colour];
+                int arrind = pImg->widthStep * row + col * pImg->nChannels + colour;
+                tensor->data[multiplePointParameters(&point)] = pImg->imageData[arrind];
             }
         }
 
     }
+    cvReleaseImage(&pImg);
     return tensor;
 }
 
 Tensor* readTensorFromFile(FILE* file){
     Point point = {0, 0, 0};
-    int pointNum;
-    fscanf(file, "%d", &pointNum);
-    point.H = pointNum;
-    fscanf(file, "%d", &pointNum);
-    point.W = pointNum;
-    fscanf(file, "%d", &pointNum);
-    point.D = pointNum;
+    fscanf(file, "%d", &(point.H));
+    fscanf(file, "%d", &(point.W));
+    fscanf(file, "%d", &(point.D));
 
     Tensor* tensor = initTensor(&point);
     for(int i = 0; i < multiplePointParameters(&point); i++){
@@ -47,27 +44,25 @@ Tensor* readTensorFromFile(FILE* file){
 }
 
 void writeTensorToFile(Tensor* tensor, FILE* file){
-    int a = multiplePointParameters(tensor->size);
     fprintf(file, "%d %d %d ", tensor->size->H, tensor->size->W, tensor->size->D);
-    for(int i = 0; i < a; i++){
-        fprintf(file, "%f ", tensor->data[i]);
+    for(int i = 0; i < multiplePointParameters(tensor->size); i++){
+        fprintf(file, "%lf ", tensor->data[i]);
     }
 }
 
 Tensor* addDimensionsToTensor(Tensor* oldT, int n, int k){
     Point newpoint = {oldT->size->H, oldT->size->W, oldT->size->D + 2};
     Tensor* newTensor = initTensor(&newpoint);
-    int a = multiplePointParameters(oldT->size);
-    for(int i = 0; i < a; i++){
+    int mPP = multiplePointParameters(oldT->size);
+    for(int i = 0; i < mPP; i++){
         newTensor->data[i] = oldT->data[i];
     }
-    for(int i = a; i < a + oldT->size->H * oldT->size->W ; i++){
+    for(int i = mPP; i < mPP + oldT->size->H * oldT->size->W ; i++){
         newTensor->data[i] = n;
     }
-    for(int i = a + oldT->size->H * oldT->size->W; i < a + 2 * oldT->size->H * oldT->size->W ; i++){
+    for(int i = mPP + oldT->size->H * oldT->size->W; i < mPP + 2 * oldT->size->H * oldT->size->W ; i++){
         newTensor->data[i] = k;
     }
-    freeTensor(oldT);
     return newTensor;
 }
 
