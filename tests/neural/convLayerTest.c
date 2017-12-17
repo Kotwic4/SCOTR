@@ -47,8 +47,8 @@ void testActivateConvLayer() {
     for (int i = 0; i < 75; i++) {
         *getFasterTensorField(in, i) = values[i];
     }
-    Tensor * filt = *(Tensor **)getVectorField(convLayer->filters,0);
-    Tensor * filt2 = *(Tensor **)getVectorField(convLayer->filters,1);
+    Tensor * filt = *(Tensor **)getVectorField(convLayer->filt,0);
+    Tensor * filt2 = *(Tensor **)getVectorField(convLayer->filt,1);
     for (int i = 0; i < 27; i++){
         *getFasterTensorField(filt, i) = filter1[i];
         *getFasterTensorField(filt2, i) = filter2[i];

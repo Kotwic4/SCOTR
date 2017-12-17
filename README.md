@@ -162,7 +162,7 @@ enum o wartosciach:
         * Tensor<float> back
         * Tensor<float> in
         * Tensor<float> out
-        * Vector<Tensor<float>> filters
+        * Vector<Tensor<float>> filt
         * int stride
         * int spatial_extent
         * int padding
@@ -177,7 +177,7 @@ enum o wartosciach:
         * Tensor<float> back
         * Tensor<float> in
         * Tensor<float> out
-        * Vector<Tensor<float>> filters
+        * Vector<Tensor<float>> filt
         * Tensor<float> weights;
     * metody:
         * FcLayer( Point in_size, int out_size )
@@ -203,7 +203,7 @@ enum o wartosciach:
         * Tensor<float> back
         * Tensor<float> in
         * Tensor<float> out
-        * Vector<Tensor<float>> filters
+        * Vector<Tensor<float>> filt
         * int stride
         * int spatial_extent
         * int padding

@@ -6,9 +6,15 @@
 
 typedef struct {
     LayerType type; // conv
-    Tensor *back, *in, *out;
-    int stride, spatialExtent, padding;
-    Vector *filters, *filtersGrad, *filtersOldGrad;
+    Tensor *back;
+    Tensor *in;
+    Tensor *out;
+    Vector *filt;
+    Vector *grad;
+    Vector *oldGrad;
+    int stride;
+    int spatial;
+    int padding;
 } ConvLayer;
 
 ConvLayer *initConvLayer(int stride, int spatialExtent, int padding, int filtersNumber, Point *inSize);
