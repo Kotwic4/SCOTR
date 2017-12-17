@@ -16,4 +16,6 @@ Tensor* addDimensionsToTensor(Tensor* oldT, int n, int k);
 
 Vector* createParamtersTensors(Tensor* rawImage, int n);
 
+Tensor* returnOutputTensor(int n, int k);
+
 #endif //SCOTR_TENSOR_PROCESING_H
