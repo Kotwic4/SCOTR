@@ -25,4 +25,8 @@ void backPropConvLayer(ConvLayer *convLayer, Tensor *nextLayerBack);
 
 void freeConvLayer(ConvLayer *convLayer);
 
+ConvLayer *readConvLayerFile(FILE *file);
+
+void saveConvLayerFile(FILE *file, ConvLayer *layer);
+
 #endif //SCOTR_CONVLAYER_H

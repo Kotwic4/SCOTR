@@ -1,4 +1,5 @@
 #include <math.h>
+#include <mem.h>
 #include "layer.h"
 #include "convLayer.h"
 #include "fcLayer.h"
@@ -67,4 +68,45 @@ int normalizeValue(double x, int max, int flag) {
     if (x >= max) return max;
     if (flag)return (int) ceil(x);
     return (int) floor(x);
+}
+
+Layer *readLayerFile(FILE *file){
+
+    char buff[255];
+    fscanf(file,"%s", buff);
+    if(strcmp(buff,"conv") == 0){
+        return (Layer *) readConvLayerFile(file);
+    }
+    if(strcmp(buff,"fc") == 0){
+        return (Layer *) readFcLayerFile(file);
+    }
+    if(strcmp(buff,"relu") == 0){
+        return (Layer *) readReluLayerFile(file);
+    }
+    if(strcmp(buff,"pool") == 0){
+        return (Layer *) readPoolLayerFile(file);
+    }
+    return NULL;
+}
+
+void saveLayerFile(FILE *file, Layer *layer){
+
+    switch (layer->type) {
+        case conv:
+            fprintf(file,"conv\n");
+            saveConvLayerFile(file,(ConvLayer *) layer);
+            break;
+        case fc:
+            fprintf(file,"fc\n");
+            saveFcLayerFile(file, (FcLayer *) layer);
+            break;
+        case relu:
+            fprintf(file,"relu\n");
+            saveReluLayerFile(file, (ReluLayer *) layer);
+            break;
+        case pool:
+            fprintf(file,"pool\n");
+            savePoolLayerFile(file, (PoolLayer *) layer);
+            break;
+    }
 }
