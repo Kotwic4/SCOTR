@@ -8,7 +8,7 @@ PoolLayer *initPoolLayer(int stride, int spatialExtent, Point *inSize) {
     debugAssert(stride > 0);
     int w = (inSize->W - spatialExtent) / stride + 1;
     int h = (inSize->H - spatialExtent) / stride + 1;
-    Point outSize = {h,w, inSize->D};
+    Point outSize = {h, w, inSize->D};
     PoolLayer *poolLayer = malloc(sizeof(PoolLayer));
     poolLayer->type = pool;
     poolLayer->in = NULL;

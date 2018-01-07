@@ -3,76 +3,166 @@
 #include <string.h>
 #include "IOlib/tensor_procesing.h"
 #include "neural/cnn.h"
-#include "neural/testCase.h"
 
-int main() {
-    srand(time(NULL));
-    Point point = {200,100,3};
-    Cnn* cnn = initCnn(&point);
-    addConvLayer(cnn,1,5,10,2);
-    addReluLayer(cnn);
-    addPoolLayer(cnn,2,2);
-//    addConvLayer(cnn,1,3,10,1);
-//    addReluLayer(cnn);
-//    addPoolLayer(cnn,2,2);
-    addFcLayer(cnn,10);
-//    addReluLayer(cnn);
-//    addFcLayer(cnn,10);
-    FILE * file;
-#define N 100 //case number
-#define M 100 //iteration number
-    char buff[255];
-    char buff2[255];
-    TestCase testCase[N];
-    file = fopen("results.txt", "r");
-    for(int i = 0; i < N; i++){
-        fscanf(file,"%s %s\n",buff,buff2);
-        Tensor * in = readImagineToTensor(buff);
-        int k = strlen(buff2);
-        Tensor * back = returnOutputTensor(10,k-1);
-        testCase[i].input = in;
-        testCase[i].expected = back;
+
+Tensor *initTensorArray(Point *inPoint, const double *array) {
+    Tensor *result = initTensor(inPoint);
+    for (int i = 0; i < multiplePointParameters(inPoint); i++) {
+        *getFasterTensorField(result, i) = array[i];
     }
-    fclose(file);
-    for(int i = 0; i < M; i++){
+    return result;
+}
+
+void printForwad(Cnn *cnn, Tensor *in) {
+    Tensor *out = getForward(cnn, in);
+    for (int i = 0; i < multiplePointParameters(out->size); i++) {
+        printf("[%d] : %f", i, *getFasterTensorField(out, i));
+    }
+    printf("\n");
+}
+
+void trainCnnTestCases(Cnn *cnn, TestCase *testCases, int caseNumber, int iterationNumber) {
+    for (int i = 0; i < iterationNumber; i++) {
         printf("%d\n", i);
-        for(int j = 0; j < N; j++){
-            printf("%d %d\n", i, j);
-            train(cnn,&testCase[j]);
-        }
-        Tensor * in = testCase[0].input;
-        Tensor * out = getForward(cnn,in);
-        for(int k = 0; k < 10; k++){
-            printf("[%d] : %lf ", k+1, *getFasterTensorField(out,k));
-        }
-        printf("\n");
-    }
-    for(int i = 0; i < N; i++){
-        printf("\n%d ", i);
-        Tensor * in = testCase[i].input;
-        Tensor * out = getForward(cnn,in);
-        for(int k = 0; k < 10; k++){
-            printf("[%d] : %lf ", k+1, *getFasterTensorField(out,k));
+        for (int j = 0; j < caseNumber; j++) {
+            train(cnn, &testCases[j]);
         }
     }
-    for(int i = 0; i< N; i++){
-        freeTensor(testCase[i].input);
-        freeTensor(testCase[i].expected);
-    }
+}
 
-    //repl
-    while(scanf("%s",buff)){
-        if(strcmp(buff,"quit")==0){
+
+void simpleCnnMain() {
+    Point inSize = {3, 1, 1};
+    Point outSize = {2, 1, 1};
+
+    Cnn *cnn = initCnn(&inSize);
+    addFcLayer(cnn, 2);
+
+    double array0[] = {0, 0, 1};
+    double array1[] = {1, 1, 1};
+    double array2[] = {1, 0, 1};
+    double array3[] = {0, 1, 1};
+    double arrayN[] = {1, 0, 0};
+
+    double arrayO0[] = {0, 0};
+    double arrayO1[] = {1, 1};
+    double arrayO2[] = {1, 0};
+    double arrayO3[] = {0, 1};
+    //double arrayON[] = {1, 0};
+
+    Tensor *in0 = initTensorArray(&inSize, array0);
+    Tensor *in1 = initTensorArray(&inSize, array1);
+    Tensor *in2 = initTensorArray(&inSize, array2);
+    Tensor *in3 = initTensorArray(&inSize, array3);
+    Tensor *inN = initTensorArray(&inSize, arrayN);
+
+    Tensor *out0 = initTensorArray(&outSize, arrayO0);
+    Tensor *out1 = initTensorArray(&outSize, arrayO1);
+    Tensor *out2 = initTensorArray(&outSize, arrayO2);
+    Tensor *out3 = initTensorArray(&outSize, arrayO3);
+
+    TestCase testCase[4];
+    testCase[0] = (TestCase) {in0, out0};
+    testCase[1] = (TestCase) {in1, out1};
+    testCase[2] = (TestCase) {in2, out2};
+    testCase[3] = (TestCase) {in3, out3};
+
+    trainCnnTestCases(cnn, testCase, 4, 10000);
+
+    printForwad(cnn, in0);
+    printForwad(cnn, in1);
+    printForwad(cnn, in2);
+    printForwad(cnn, in3);
+    printForwad(cnn, inN);
+
+    freeCnn(cnn);
+    freeTensor(in0);
+    freeTensor(in1);
+    freeTensor(in2);
+    freeTensor(in3);
+    freeTensor(inN);
+    freeTensor(out0);
+    freeTensor(out1);
+}
+
+Tensor *getMnist(char *filename) {
+    Point point = {28, 28, 1};
+    Tensor *tensor = initTensor(&point);
+    FILE *file = fopen(filename, "r");
+    if (file) {
+        for (int i = 0; i < 28; i++) {
+            for (int j = 0; j < 28; j++) {
+                int x;
+                fscanf(file, "%d", &x);
+                *getFasterTensorField(tensor, i * 28 + j) = x / 255;
+            }
+        }
+        fclose(file);
+    } else {
+        printf("ERROR: Can't open file %s", filename);
+    }
+    return tensor;
+}
+
+TestCase *mintReadTestCases(char *filename, int caseNumber) {
+    char imageFileName[255];
+    TestCase *testCases = calloc(sizeof(TestCase), (size_t) caseNumber);
+    FILE *file = fopen(filename, "r");
+    if (file) {
+        for (int i = 0; i < caseNumber; i++) {
+            int k;
+            fscanf(file, "%s %d\n", imageFileName, &k);
+            Tensor *in = getMnist(imageFileName);
+            Tensor *back = returnOutputTensor(10, k);
+            testCases[i].input = in;
+            testCases[i].expected = back;
+        }
+        fclose(file);
+    } else {
+        printf("ERROR: Can't open file %s", filename);
+    }
+    return testCases;
+}
+
+void mintTrain(Cnn *cnn, int caseNumber, int iterationNumber) {
+    TestCase *testCases = mintReadTestCases("test.txt", caseNumber);
+    trainCnnTestCases(cnn, testCases, caseNumber, iterationNumber);
+    for (int i = 0; i < caseNumber; i++) {
+        freeTensor(testCases[i].input);
+        freeTensor(testCases[i].expected);
+    }
+    free(testCases);
+}
+
+void mintRepl(Cnn *cnn) {
+    printf("Welcome to MINT repl mode\n");
+    char buff[255];
+    while (scanf("%s", buff)) {
+        if (strcmp(buff, "quit") == 0) {
             break;
         }
-        Tensor * in = readImagineToTensor(buff);
-        Tensor * out = getForward(cnn,in);
-        for(int k = 0; k < 10; k++){
-            printf("[%d] : %lf\n", k+1, *getFasterTensorField(out,k));
-        }
+        Tensor *in = getMnist(buff);
+        printForwad(cnn, in);
         freeTensor(in);
-        freeTensor(out);
     }
+}
+
+void mintMain() {
+    Point inSize = {28, 28, 1};
+    Cnn *cnn = initCnn(&inSize);
+    addConvLayer(cnn, 1, 5, 8, 0);
+    addReluLayer(cnn);
+    addPoolLayer(cnn, 2, 2);
+    addFcLayer(cnn, 10);
+    mintTrain(cnn, 2, 100);
+    mintRepl(cnn);
     freeCnn(cnn);
+}
+
+
+int main() {
+    srand((unsigned int) time(NULL));
+//    simpleCnnMain();
+    mintMain();
     return 0;
 }

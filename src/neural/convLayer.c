@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "convLayer.h"
 #include "grad.h"
 
@@ -50,7 +51,7 @@ int checkIndex(Point point, int padding, Point max) {
 void activateConvLayer(ConvLayer *convLayer, Tensor *in) {
     convLayer->in = in;
     for (int f_i = 0; f_i < convLayer->filt->size; f_i++) {
-        Tensor *filter = *(Tensor **)getVectorField(convLayer->filt, f_i);
+        Tensor *filter = *(Tensor **) getVectorField(convLayer->filt, f_i);
         for (int i = 0; i < convLayer->out->size->H; i++) {
             for (int j = 0; j < convLayer->out->size->W; j++) {
                 double sum = 0;
@@ -83,7 +84,7 @@ void backPropConvLayer(ConvLayer *convLayer, Tensor *nextLayerBack) {
     Point outSize = *convLayer->out->size;
     int padding = convLayer->padding;
     for (int f_i = 0; f_i < convLayer->grad->size; f_i++) {
-        Tensor *filterGrad = *(Tensor **)getVectorField(convLayer->grad, f_i);
+        Tensor *filterGrad = *(Tensor **) getVectorField(convLayer->grad, f_i);
         for (int i = 0; i < spatialExtent; i++) {
             for (int j = 0; j < spatialExtent; j++) {
                 for (int k = 0; k < inSize.D; k++) {
@@ -105,8 +106,8 @@ void backPropConvLayer(ConvLayer *convLayer, Tensor *nextLayerBack) {
                 for (int x = x_min; x <= x_max; x++) {
                     for (int y = y_min; y <= y_max; y++) {
                         for (int z = 0; z < convLayer->filt->size; z++) {
-                            Tensor *filter = *(Tensor **)getVectorField(convLayer->filt, z);
-                            Tensor *filterGrad = *(Tensor **)getVectorField(convLayer->grad, z);
+                            Tensor *filter = *(Tensor **) getVectorField(convLayer->filt, z);
+                            Tensor *filterGrad = *(Tensor **) getVectorField(convLayer->grad, z);
                             Point outIndex = {x, y, z};
                             Point filterIndex = {i + padding - x_min, j + padding - y_min, k};
                             double filter_value = *getTensorField(filter, filterIndex);
@@ -123,9 +124,9 @@ void backPropConvLayer(ConvLayer *convLayer, Tensor *nextLayerBack) {
     }
 
     for (int f_i = 0; f_i < convLayer->grad->size; f_i++) {
-        Tensor *filter = *(Tensor **)getVectorField(convLayer->filt, f_i);
-        Tensor *filterOldGrad = *(Tensor **)getVectorField(convLayer->oldGrad, f_i);
-        Tensor *filterGrad = *(Tensor **)getVectorField(convLayer->grad, f_i);
+        Tensor *filter = *(Tensor **) getVectorField(convLayer->filt, f_i);
+        Tensor *filterOldGrad = *(Tensor **) getVectorField(convLayer->oldGrad, f_i);
+        Tensor *filterGrad = *(Tensor **) getVectorField(convLayer->grad, f_i);
         for (int i = 0; i < spatialExtent; i++) {
             for (int j = 0; j < spatialExtent; j++) {
                 for (int k = 0; k < inSize.D; k++) {
@@ -148,9 +149,9 @@ void freeConvLayer(ConvLayer *convLayer) {
     freeTensor(convLayer->back);
     freeTensor(convLayer->out);
     for (int i = 0; i < convLayer->filt->size; i++) {
-        freeTensor(*(Tensor **)getVectorField(convLayer->filt, i));
-        freeTensor(*(Tensor **)getVectorField(convLayer->grad, i));
-        freeTensor(*(Tensor **)getVectorField(convLayer->oldGrad, i));
+        freeTensor(*(Tensor **) getVectorField(convLayer->filt, i));
+        freeTensor(*(Tensor **) getVectorField(convLayer->grad, i));
+        freeTensor(*(Tensor **) getVectorField(convLayer->oldGrad, i));
     }
     freeVector(convLayer->filt);
     freeVector(convLayer->grad);
