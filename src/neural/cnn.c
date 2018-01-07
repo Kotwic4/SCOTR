@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "cnn.h"
 
 Cnn *initCnn(Point *inSize) {
@@ -14,11 +15,11 @@ void train(Cnn *cnn, TestCase *testCase) {
 
 Tensor *getForward(Cnn *cnn, Tensor *input) {
     Layer *previousLayer;
-    Layer *layer = *(Layer **)getVectorField(cnn->layers, 0);
+    Layer *layer = *(Layer **) getVectorField(cnn->layers, 0);
     activateLayer(layer, input);
     for (int i = 1; i < cnn->layers->size; i++) {
         previousLayer = layer;
-        layer = *(Layer **)getVectorField(cnn->layers, i);
+        layer = *(Layer **) getVectorField(cnn->layers, i);
         input = previousLayer->out;
         activateLayer(layer, input);
     }
@@ -29,13 +30,13 @@ void backPropCnn(Cnn *cnn, Tensor *result, Tensor *expected) {
 
     Layer *nextLayer;
     Tensor *back = subTensor(result, expected);
-    Layer *layer = *(Layer **)getVectorField(cnn->layers, cnn->layers->size - 1);
+    Layer *layer = *(Layer **) getVectorField(cnn->layers, cnn->layers->size - 1);
     backPropLayer(layer, back);
     freeTensor(back);
 
     for (int i = cnn->layers->size - 2; i >= 0; i--) {
         nextLayer = layer;
-        layer = *(Layer **)getVectorField(cnn->layers, i);
+        layer = *(Layer **) getVectorField(cnn->layers, i);
         back = nextLayer->back;
         backPropLayer(layer, back);
     }
@@ -46,7 +47,7 @@ Point *getCnnOutSize(Cnn *cnn) {
     if (cnn->layers->size == 0) {
         return cnn->inSize;
     } else {
-        Layer *lastLayer = *(Layer **)getVectorField(cnn->layers, cnn->layers->size - 1);
+        Layer *lastLayer = *(Layer **) getVectorField(cnn->layers, cnn->layers->size - 1);
         return lastLayer->out->size;
     }
 }
@@ -77,7 +78,7 @@ void addReluLayer(Cnn *cnn) {
 
 void freeCnn(Cnn *cnn) {
     for (int i = 0; i < cnn->layers->size; i++) {
-        Layer *layer = *(Layer **)getVectorField(cnn->layers, i);
+        Layer *layer = *(Layer **) getVectorField(cnn->layers, i);
         freeLayer(layer);
     }
     freeVector(cnn->layers);

@@ -26,13 +26,13 @@ FcLayer *initFcLayer(Point *inSize, int outSize) {
     }
 
     int max = multiplePointParameters(inSize);
+    double maxVal = 2.19722f / max;
 
     for (int i = 0; i < outSize; i++) {
         for (int j = 0; j < max; j++) {
-            *getTensorField(fcLayer->weights, (Point) {j, i, 0}) = 2.19722f / max * rand() / (double) RAND_MAX;
+            *getTensorField(fcLayer->weights, (Point) {j, i, 0}) = maxVal * rand() / (double) RAND_MAX;
         }
     }
-
 
     return fcLayer;
 }
@@ -63,7 +63,6 @@ void activateFcLayer(FcLayer *fcLayer, Tensor *in) {
         }
         *getTensorField(fcLayer->input, (Point) {n, 0, 0}) = inputValue;
         *getTensorField(fcLayer->out, (Point) {n, 0, 0}) = activatorFunction(inputValue);
-
     }
 }
 
