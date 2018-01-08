@@ -33,7 +33,7 @@ Tensor* readTensorFromFile(FILE* file){
     Point point = readPointFile(file);
     Tensor* tensor = initTensor(&point);
     for(int i = 0; i < multiplePointParameters(&point); i++){
-        fscanf(file, "%lf", &tensor->data[i]);
+        fscanf(file, "%le", &tensor->data[i]);
     }
     return tensor;
 }
@@ -41,7 +41,7 @@ Tensor* readTensorFromFile(FILE* file){
 void writeTensorToFile(Tensor* tensor, FILE* file){
     savePointFile(file, *tensor->size);
     for(int i = 0; i < multiplePointParameters(tensor->size); i++){
-        fprintf(file, "%lf\n", tensor->data[i]);
+        fprintf(file, "%le\n", tensor->data[i]);
     }
 }
 

@@ -69,8 +69,7 @@ void simpleCnnMain() {
     testCase[2] = (TestCase) {in2, out2};
     testCase[3] = (TestCase) {in3, out3};
 
-//    trainCnnTestCases(cnn, testCase, 4, 10000);
-    trainCnnTestCases(cnn, testCase, 4, 10);
+    trainCnnTestCases(cnn, testCase, 4, 10000);
 
     printForwad(cnn, in0);
     printForwad(cnn, in1);
@@ -169,7 +168,7 @@ void mintMain() {
     addReluLayer(cnn);
     addPoolLayer(cnn, 2, 2);
     addFcLayer(cnn, 10);
-    mintTrain(cnn, 20, 1000);
+    mintTrain(cnn, 20, 100);
     mintRepl(cnn);
 //    FILE *file = fopen("cnn.txt", "w");
 //    saveCnnFile(file,cnn);
@@ -199,7 +198,7 @@ void mintMainTrain() {
     addReluLayer(cnn);
     addPoolLayer(cnn, 2, 2);
     addFcLayer(cnn, 10);
-    mintTrain(cnn, 20, 200);
+    mintTrain(cnn, 20, 10);
     FILE *file = fopen("cnn.txt", "w");
     saveCnnFile(file,cnn);
     fclose(file);
@@ -213,6 +212,6 @@ int main() {
 //    simpleCnnMain();
 //    mintMain();
     mintMainTrain();
-    mintMainRepl();
+//    mintMainRepl();
     return 0;
 }
