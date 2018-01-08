@@ -23,7 +23,9 @@ void printForwad(Cnn *cnn, Tensor *in) {
 
 void trainCnnTestCases(Cnn *cnn, TestCase *testCases, int caseNumber, int iterationNumber) {
     for (int i = 0; i < iterationNumber; i++) {
-        printf("%d\n", i);
+        if(i%10 == 0){
+            printf("%d\n", i);
+        }
         for (int j = 0; j < caseNumber; j++) {
             train(cnn, &testCases[j]);
         }
@@ -67,7 +69,8 @@ void simpleCnnMain() {
     testCase[2] = (TestCase) {in2, out2};
     testCase[3] = (TestCase) {in3, out3};
 
-    trainCnnTestCases(cnn, testCase, 4, 10000);
+//    trainCnnTestCases(cnn, testCase, 4, 10000);
+    trainCnnTestCases(cnn, testCase, 4, 10);
 
     printForwad(cnn, in0);
     printForwad(cnn, in1);
@@ -83,8 +86,8 @@ void simpleCnnMain() {
     file = fopen("cnn.txt", "r");
     cnn = readCnnFile(file);
     fclose(file);
-    freeCnn(cnn);
     printForwad(cnn, inN);
+    freeCnn(cnn);
 
     freeTensor(in0);
     freeTensor(in1);
@@ -166,15 +169,50 @@ void mintMain() {
     addReluLayer(cnn);
     addPoolLayer(cnn, 2, 2);
     addFcLayer(cnn, 10);
-    mintTrain(cnn, 0, 0);
+    mintTrain(cnn, 20, 1000);
+    mintRepl(cnn);
+//    FILE *file = fopen("cnn.txt", "w");
+//    saveCnnFile(file,cnn);
+//    fclose(file);
+//    freeCnn(cnn);
+//    file = fopen("cnn.txt", "r");
+//    cnn = readCnnFile(file);
+//    fclose(file);
+//    mintRepl(cnn);
+    freeCnn(cnn);
+}
+
+void mintMainRepl() {
+    Cnn *cnn;
+    FILE *file;
+    file = fopen("cnn.txt", "r");
+    cnn = readCnnFile(file);
+    fclose(file);
     mintRepl(cnn);
     freeCnn(cnn);
 }
+
+void mintMainTrain() {
+    Point inSize = {28, 28, 1};
+    Cnn *cnn = initCnn(&inSize);
+    addConvLayer(cnn, 1, 5, 8, 0);
+    addReluLayer(cnn);
+    addPoolLayer(cnn, 2, 2);
+    addFcLayer(cnn, 10);
+    mintTrain(cnn, 20, 200);
+    FILE *file = fopen("cnn.txt", "w");
+    saveCnnFile(file,cnn);
+    fclose(file);
+    freeCnn(cnn);
+}
+
 
 
 int main() {
     srand((unsigned int) time(NULL));
 //    simpleCnnMain();
-    mintMain();
+//    mintMain();
+    mintMainTrain();
+    mintMainRepl();
     return 0;
 }

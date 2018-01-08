@@ -192,9 +192,9 @@ void saveConvLayerFile(FILE *file, ConvLayer *layer) {
     savePointFile(file, *layer->back->size);
     fprintf(file, "%d %d %d %d\n", layer->stride, layer->spatial, layer->padding, filtersNumber);
     for (int i = 0; i < filtersNumber; i++) {
-        writeTensorToFile(getVectorField(layer->filt, i), file);
-        writeTensorToFile(getVectorField(layer->grad, i), file);
-        writeTensorToFile(getVectorField(layer->oldGrad, i), file);
+        writeTensorToFile(*(Tensor **)getVectorField(layer->filt, i), file);
+        writeTensorToFile(*(Tensor **)getVectorField(layer->grad, i), file);
+        writeTensorToFile(*(Tensor **)getVectorField(layer->oldGrad, i), file);
     }
 }
 
