@@ -6,4 +6,5 @@
 typedef struct {
     Tensor *input, *expected;
 } TestCase;
+
 #endif //SCOTR_TESTCASE_H

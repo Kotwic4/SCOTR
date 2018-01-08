@@ -1,6 +1,4 @@
-#include <stdio.h>
 #include "cnn.h"
-#include "../math/vector.h"
 
 Cnn *initCnn(Point *inSize) {
     Cnn *cnn = malloc(sizeof(Cnn));
@@ -85,25 +83,4 @@ void freeCnn(Cnn *cnn) {
     freeVector(cnn->layers);
     free(cnn->inSize);
     free(cnn);
-}
-
-Cnn* readCnnFile(FILE *file){
-    Cnn *cnn = malloc(sizeof(Cnn));
-    cnn->inSize = copyPoint(readPointFile(file));
-    cnn->layers = initVector(0);
-    int layersNumber;
-    fscanf(file,"%d",&layersNumber);
-    for(int i = 0; i< layersNumber; i++){
-        addLayer(cnn,readLayerFile(file));
-    }
-    return cnn;
-}
-
-void saveCnnFile(FILE *file, Cnn *cnn){
-    savePointFile(file,*cnn->inSize);
-    int layersNumber = cnn->layers->size;
-    fprintf(file,"%d\n",layersNumber);
-    for(int i = 0; i< layersNumber; i++){
-        saveLayerFile(file,*(Layer **)getVectorField(cnn->layers,i));
-    }
 }

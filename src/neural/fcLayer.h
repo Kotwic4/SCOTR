@@ -3,6 +3,10 @@
 
 #include "layer.h"
 #include "../math/vector.h"
+#include <time.h>
+#include <math.h>
+#include <stdlib.h>
+#include "grad.h"
 
 typedef struct {
     LayerType type; // fc
@@ -16,9 +20,5 @@ void activateFcLayer(FcLayer *fcLayer, Tensor *in);
 void backPropFcLayer(FcLayer *fcLayer, Tensor *nextLayerBack);
 
 void freeFcLayer(FcLayer *fcLayer);
-
-FcLayer *readFcLayerFile(FILE *file);
-
-void saveFcLayerFile(FILE *file, FcLayer *layer);
 
 #endif //SCOTR_FCLAYER_H

@@ -46,12 +46,3 @@ void freeReluLayer(ReluLayer *reluLayer) {
     freeTensor(reluLayer->out);
     free(reluLayer);
 }
-
-ReluLayer *readReluLayerFile(FILE *file) {
-    Point point = readPointFile(file);
-    return initReluLayer(&point);
-}
-
-void saveReluLayerFile(FILE *file, ReluLayer *layer) {
-    savePointFile(file, *layer->in->size);
-}

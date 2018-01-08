@@ -12,3 +12,10 @@ double updateWeight(double weight, double grad, double oldGrad, double multp) {
 double updateGradient(double grad, double oldGrad) {
     return grad + oldGrad * MOMENTUM;
 }
+
+int normalizeValue(double x, int max, int flag) {
+    if (x <= 0) return 0;
+    if (x >= max) return max;
+    if (flag)return (int) ceil(x);
+    return (int) floor(x);
+}

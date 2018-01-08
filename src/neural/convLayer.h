@@ -3,6 +3,10 @@
 
 #include "layer.h"
 #include "../math/vector.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "grad.h"
+#include "../io/mathProcesing.h"
 
 typedef struct {
     LayerType type; // conv
@@ -24,9 +28,5 @@ void activateConvLayer(ConvLayer *convLayer, Tensor *in);
 void backPropConvLayer(ConvLayer *convLayer, Tensor *nextLayerBack);
 
 void freeConvLayer(ConvLayer *convLayer);
-
-ConvLayer *readConvLayerFile(FILE *file);
-
-void saveConvLayerFile(FILE *file, ConvLayer *layer);
 
 #endif //SCOTR_CONVLAYER_H

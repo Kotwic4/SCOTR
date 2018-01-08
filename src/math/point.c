@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <malloc.h>
 #include "point.h"
-
 
 int multiplePointParameters(Point *point) {
     return point->H * point->W * point->D;
@@ -14,10 +11,6 @@ Point *copyPoint(Point point) {
 }
 
 int convertPointToIndex(Point point, Point range) {
-    // Index = d*W*H + h*W + w
-    // where:
-    // point = {h, d, w} each from 0 to N-1
-    // range = {H, D, W} each from 1 to N
     if (!(point.H < range.H && point.W < range.W && point.D < range.D)) {
         fprintf(stderr, "convertPointToIndex error: one of point value is out of range\n");
         return -1;
@@ -26,7 +19,6 @@ int convertPointToIndex(Point point, Point range) {
 }
 
 Point convertIndexToPoint(int index, Point range) {
-
     if (index >= multiplePointParameters(&range)) {
         fprintf(stderr, "convertIndexToPoint error: index is out of range");
         return (Point) {0, 0, 0};
@@ -38,14 +30,4 @@ Point convertIndexToPoint(int index, Point range) {
     index = index - point.H * range.W;
     point.W = index;
     return point;
-}
-
-Point readPointFile(FILE *file) {
-    Point point = {0, 0, 0};
-    fscanf(file, "%d %d %d", &(point.H), &(point.W), &(point.D));
-    return point;
-}
-
-void savePointFile(FILE *file, Point point) {
-    fprintf(file, "%d %d %d\n", (point.H), (point.W), (point.D));
 }

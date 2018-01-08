@@ -16,8 +16,4 @@ void backPropReluLayer(ReluLayer *reluLayer, Tensor *nextLayerBack);
 
 void freeReluLayer(ReluLayer *reluLayer);
 
-ReluLayer *readReluLayerFile(FILE *file);
-
-void saveReluLayerFile(FILE *file, ReluLayer *reluLayer);
-
 #endif //SCOTR_RELULAYER_H
