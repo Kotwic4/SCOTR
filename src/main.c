@@ -75,7 +75,17 @@ void simpleCnnMain() {
     printForwad(cnn, in3);
     printForwad(cnn, inN);
 
+    FILE *file = fopen("cnn.txt", "w");
+    saveCnnFile(file,cnn);
+    fclose(file);
     freeCnn(cnn);
+
+    file = fopen("cnn.txt", "r");
+    cnn = readCnnFile(file);
+    fclose(file);
+    freeCnn(cnn);
+    printForwad(cnn, inN);
+
     freeTensor(in0);
     freeTensor(in1);
     freeTensor(in2);
@@ -83,6 +93,8 @@ void simpleCnnMain() {
     freeTensor(inN);
     freeTensor(out0);
     freeTensor(out1);
+
+
 }
 
 Tensor *getMnist(char *filename) {
@@ -154,7 +166,7 @@ void mintMain() {
     addReluLayer(cnn);
     addPoolLayer(cnn, 2, 2);
     addFcLayer(cnn, 10);
-    mintTrain(cnn, 2, 100);
+    mintTrain(cnn, 0, 0);
     mintRepl(cnn);
     freeCnn(cnn);
 }

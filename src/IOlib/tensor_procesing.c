@@ -20,7 +20,7 @@ Tensor* readImagineToTensor( char* filename ){
                 point.W = col;
                 point.D = colour;
                 int dataIndex = colour + col * nChannels + row * width * nChannels;
-                tensor->data[multiplePointParameters(&point)] = data[dataIndex];
+                tensor->data[multiplePointParameters(&point)] = data[dataIndex]/255;
             }
         }
 
@@ -30,11 +30,7 @@ Tensor* readImagineToTensor( char* filename ){
 }
 
 Tensor* readTensorFromFile(FILE* file){
-    Point point = {0, 0, 0};
-    fscanf(file, "%d", &(point.H));
-    fscanf(file, "%d", &(point.W));
-    fscanf(file, "%d", &(point.D));
-
+    Point point = readPointFile(file);
     Tensor* tensor = initTensor(&point);
     for(int i = 0; i < multiplePointParameters(&point); i++){
         fscanf(file, "%lf", &tensor->data[i]);
@@ -43,9 +39,9 @@ Tensor* readTensorFromFile(FILE* file){
 }
 
 void writeTensorToFile(Tensor* tensor, FILE* file){
-    fprintf(file, "%d %d %d ", tensor->size->H, tensor->size->W, tensor->size->D);
+    savePointFile(file, *tensor->size);
     for(int i = 0; i < multiplePointParameters(tensor->size); i++){
-        fprintf(file, "%lf ", tensor->data[i]);
+        fprintf(file, "%lf\n", tensor->data[i]);
     }
 }
 

@@ -37,4 +37,8 @@ void addReluLayer(Cnn *cnn);
 
 void freeCnn(Cnn *cnn);
 
+Cnn* readCnnFile(FILE *file);
+
+void saveCnnFile(FILE *file, Cnn *cnn);
+
 #endif //SCOTR_CNN_H

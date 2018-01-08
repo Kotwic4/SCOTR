@@ -81,4 +81,14 @@ void freePoolLayer(PoolLayer *poolLayer) {
     free(poolLayer);
 }
 
+PoolLayer *readPoolLayerFile(FILE *file) {
+    Point point = readPointFile(file);
+    int stride, spatialExtent;
+    fscanf(file, "%d %d", &stride, &spatialExtent);
+    return initPoolLayer(stride, spatialExtent, &point);
+}
 
+void savePoolLayerFile(FILE *file, PoolLayer *layer) {
+    savePointFile(file, *layer->in->size);
+    fprintf(file, "%d %d\n", layer->stride, layer->spatialExtent);
+}

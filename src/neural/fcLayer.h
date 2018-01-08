@@ -17,4 +17,8 @@ void backPropFcLayer(FcLayer *fcLayer, Tensor *nextLayerBack);
 
 void freeFcLayer(FcLayer *fcLayer);
 
+FcLayer *readFcLayerFile(FILE *file);
+
+void saveFcLayerFile(FILE *file, FcLayer *layer);
+
 #endif //SCOTR_FCLAYER_H

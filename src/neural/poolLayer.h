@@ -18,4 +18,8 @@ void backPropPoolLayer(PoolLayer *poolLayer, Tensor *nextLayerBack);
 
 void freePoolLayer(PoolLayer *poolLayer);
 
+PoolLayer *readPoolLayerFile(FILE *file);
+
+void savePoolLayerFile(FILE *file, PoolLayer *layer);
+
 #endif //SCOTR_POOLLAYER_H

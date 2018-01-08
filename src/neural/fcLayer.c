@@ -4,6 +4,7 @@
 #include "fcLayer.h"
 #include "grad.h"
 #include "testCase.h"
+#include "../IOlib/tensor_procesing.h"
 
 
 FcLayer *initFcLayer(Point *inSize, int outSize) {
@@ -122,4 +123,27 @@ void freeFcLayer(FcLayer *fcLayer) {
     freeTensor(fcLayer->oldGrad);
     freeTensor(fcLayer->input);
     free(fcLayer);
+}
+
+FcLayer *readFcLayerFile(FILE *file){
+    Point inSize = readPointFile(file);
+    Point outPoint = readPointFile(file);
+    FcLayer *fcLayer = malloc(sizeof(FcLayer));
+    fcLayer->type = fc;
+    fcLayer->in = NULL;
+    fcLayer->back = initTensor(&inSize);
+    fcLayer->grad = readTensorFromFile(file);
+    fcLayer->oldGrad = readTensorFromFile(file);
+    fcLayer->out = initTensor(&outPoint);
+    fcLayer->input = initTensor(&outPoint);
+    fcLayer->weights = readTensorFromFile(file);
+    return fcLayer;
+}
+
+void saveFcLayerFile(FILE *file, FcLayer *layer){
+    savePointFile(file,*layer->back->size);
+    savePointFile(file,*layer->out->size);
+    writeTensorToFile(layer->grad,file);
+    writeTensorToFile(layer->oldGrad,file);
+    writeTensorToFile(layer->weights,file);
 }

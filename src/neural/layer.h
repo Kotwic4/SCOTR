@@ -3,6 +3,7 @@
 
 #include "../util/debugAssert.h"
 #include <malloc.h>
+#include <stdio.h>
 #include "../math/tensor.h"
 
 typedef enum {
@@ -21,5 +22,9 @@ void backPropLayer(Layer *layer, Tensor *nextLayerBack);
 void freeLayer(Layer *layer);
 
 int normalizeValue(double x, int max, int flag);
+
+Layer *readLayerFile(FILE *file);
+
+void saveLayerFile(FILE *file, Layer *layer);
 
 #endif //SCOTR_LAYER_H
