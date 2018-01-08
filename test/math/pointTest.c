@@ -1,15 +1,15 @@
 #include "pointTest.h"
 
-void testMultiplePointParameters(){
-    Point point1 = { 1, 2, 3};
+void testMultiplePointParameters() {
+    Point point1 = {1, 2, 3};
     assert(multiplePointParameters(&point1) == 6);
     Point point2 = {100, 10, 1000};
     assert(multiplePointParameters(&point2) == 1000000);
 }
 
-void testCopyPoint(){
+void testCopyPoint() {
     Point point1 = {15, 24, 38};
-    Point* point2 = copyPoint(point1);
+    Point *point2 = copyPoint(point1);
     assert(point1.H == point2->H);
     assert(point1.W == point2->W);
     assert(point1.D == point2->D);
@@ -27,9 +27,9 @@ void testConvertPointToIndex() {
     assert(convertPointToIndex(range, range) == -1);
 }
 
-void testConvertIndexToPoint(){
+void testConvertIndexToPoint() {
     int inx = 21;
-    Point range = {3,3,3};
+    Point range = {3, 3, 3};
     Point point = convertIndexToPoint(inx, range);
     assert(point.H == 1);
     assert(point.W == 0);
@@ -41,7 +41,7 @@ void testConvertIndexToPoint(){
     assert(convertPointToIndex(convertIndexToPoint(21, range), range) == 21);
 }
 
-void testPointAll(){
+void testPointAll() {
     testMultiplePointParameters();
     testCopyPoint();
     testConvertPointToIndex();

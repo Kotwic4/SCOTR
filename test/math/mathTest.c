@@ -1,6 +1,6 @@
 #include "mathTest.h"
 
-void testMathAll(){
+void testMathAll() {
     testPointAll();
     testVectorAll();
     testTensorAll();

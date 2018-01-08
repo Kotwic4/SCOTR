@@ -1,9 +1,7 @@
 #include <assert.h>
-#include <stddef.h>
 #include "tensorTest.h"
 #include "../../src/math/tensor.h"
 #include <wchar.h>
-#include <malloc.h>
 
 void TEST_freeTensor() {
     for (int i = 0; i < 10000; i++) {

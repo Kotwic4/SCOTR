@@ -52,8 +52,6 @@ set(SOURCE_FILES
         test/math/tensorTest.h
         test/neural/cnnTest.c
         test/neural/cnnTest.h
-        test/neural/fcLayerTest.c
-        test/neural/fcLayerTest.h
         test/neural/poolLayerTest.c
         test/neural/poolLayerTest.h
         test/neural/neuralTest.c
@@ -62,8 +60,6 @@ set(SOURCE_FILES
         test/neural/convLayerTest.h
         test/neural/gradTest.c
         test/neural/gradTest.h
-        test/neural/layerTest.c
-        test/neural/layerTest.h
         test/neural/reluLayerTest.c
         test/neural/reluLayerTest.h)
 
