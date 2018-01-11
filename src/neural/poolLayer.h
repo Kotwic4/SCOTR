@@ -3,6 +3,7 @@
 
 #include "layer.h"
 #include <float.h>
+#include "grad.h"
 
 typedef struct {
     LayerType type; // pool
@@ -17,9 +18,5 @@ void activatePoolLayer(PoolLayer *poolLayer, Tensor *in);
 void backPropPoolLayer(PoolLayer *poolLayer, Tensor *nextLayerBack);
 
 void freePoolLayer(PoolLayer *poolLayer);
-
-PoolLayer *readPoolLayerFile(FILE *file);
-
-void savePoolLayerFile(FILE *file, PoolLayer *layer);
 
 #endif //SCOTR_POOLLAYER_H

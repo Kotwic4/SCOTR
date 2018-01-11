@@ -3,9 +3,7 @@
 void testNeuralAll() {
     testCnnAll();
     testConvLayerAll();
-    testFcLayerAll();
     testGradAll();
-    testLayerAll();
     testPoolLayerAll();
     testReluLayerAll();
 }

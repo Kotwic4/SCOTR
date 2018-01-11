@@ -29,6 +29,17 @@ set(SOURCE_FILES
         src/neural/fcLayer.c
         src/neural/grad.c
         src/neural/grad.h
+        src/io/mathProcesing.h
+        src/io/mathProcesing.c
+        src/io/stb_image.h
+        src/io/cnnProcesing.c
+        src/io/cnnProcesing.h
+        src/util/cnnUtil.c
+        src/util/cnnUtil.h
+        src/examples/mintExample.c
+        src/examples/mintExample.h
+        src/examples/simpleExample.c
+        src/examples/simpleExample.h
         test/math/pointTest.c
         test/math/pointTest.h
         test/math/mathTest.c
@@ -41,8 +52,6 @@ set(SOURCE_FILES
         test/math/tensorTest.h
         test/neural/cnnTest.c
         test/neural/cnnTest.h
-        test/neural/fcLayerTest.c
-        test/neural/fcLayerTest.h
         test/neural/poolLayerTest.c
         test/neural/poolLayerTest.h
         test/neural/neuralTest.c
@@ -51,12 +60,8 @@ set(SOURCE_FILES
         test/neural/convLayerTest.h
         test/neural/gradTest.c
         test/neural/gradTest.h
-        test/neural/layerTest.c
-        test/neural/layerTest.h
         test/neural/reluLayerTest.c
-        test/neural/reluLayerTest.h
-        src/IOlib/tensor_procesing.h
-        src/IOlib/tensor_procesing.c
-        src/IOlib/stb_image.h)
+        test/neural/reluLayerTest.h)
+
 add_executable(SCOTR ${SOURCE_FILES} src/main.c)
 target_link_libraries(SCOTR m)

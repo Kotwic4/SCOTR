@@ -9,6 +9,7 @@
 #include "fcLayer.h"
 #include "reluLayer.h"
 #include "poolLayer.h"
+#include <stdio.h>
 
 typedef struct {
     Vector *layers;
@@ -36,9 +37,5 @@ void addPoolLayer(Cnn *cnn, int stride, int spatialExtent);
 void addReluLayer(Cnn *cnn);
 
 void freeCnn(Cnn *cnn);
-
-Cnn* readCnnFile(FILE *file);
-
-void saveCnnFile(FILE *file, Cnn *cnn);
 
 #endif //SCOTR_CNN_H

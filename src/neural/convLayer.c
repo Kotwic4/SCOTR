@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "convLayer.h"
-#include "grad.h"
-#include "../IOlib/tensor_procesing.h"
 
 ConvLayer *initConvLayer(int stride, int spatialExtent, int padding, int filtersNumber, Point *inSize) {
     debugAssert(inSize != NULL);
@@ -158,43 +154,3 @@ void freeConvLayer(ConvLayer *convLayer) {
     freeVector(convLayer->oldGrad);
     free(convLayer);
 }
-
-ConvLayer *readConvLayerFile(FILE *file) {
-    int stride, spatialExtent, padding, filtersNumber;
-    Point outSize = readPointFile(file);
-    Point inSize = readPointFile(file);
-    fscanf(file, "%d %d %d %d", &stride, &spatialExtent, &padding, &filtersNumber);
-    ConvLayer *convLayer = malloc(sizeof(ConvLayer));
-    convLayer->type = conv;
-    convLayer->in = NULL;
-    convLayer->out = initTensor(&outSize);
-    convLayer->back = initTensor(&inSize);
-    convLayer->stride = stride;
-    convLayer->spatial = spatialExtent;
-    convLayer->padding = padding;
-    convLayer->filt = initVector(0);
-    convLayer->oldGrad = initVector(0);
-    convLayer->grad = initVector(0);
-    for (int i = 0; i < filtersNumber; i++) {
-        Tensor *filter = readTensorFromFile(file);
-        Tensor *filterGrad = readTensorFromFile(file);
-        Tensor *filterOldGrad = readTensorFromFile(file);
-        pushBackVector(convLayer->filt, filter);
-        pushBackVector(convLayer->oldGrad, filterOldGrad);
-        pushBackVector(convLayer->grad, filterGrad);
-    }
-    return convLayer;
-}
-
-void saveConvLayerFile(FILE *file, ConvLayer *layer) {
-    int filtersNumber = layer->filt->size;
-    savePointFile(file, *layer->out->size);
-    savePointFile(file, *layer->back->size);
-    fprintf(file, "%d %d %d %d\n", layer->stride, layer->spatial, layer->padding, filtersNumber);
-    for (int i = 0; i < filtersNumber; i++) {
-        writeTensorToFile(getVectorField(layer->filt, i), file);
-        writeTensorToFile(getVectorField(layer->grad, i), file);
-        writeTensorToFile(getVectorField(layer->oldGrad, i), file);
-    }
-}
-
