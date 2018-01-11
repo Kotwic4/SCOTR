@@ -41,7 +41,7 @@ Możemy zwiekszyć maksymalną długość wejściowego słowa _N_ do np 100. => 
 Plan ma charakter orientacyjny i może być zmieniany w trakcie realizacji projektu.
 
 1. Wiedza teoretyczna  
-Zdobycie wiedzy teoretyczniej potrzebnej do implementacji projektu. W tym:
+Zdobycie wiedzy teoretyczniej potrzebnej do implementacji projektu. width tym:
     1. Rozpoznanie i wybranie odpowiednich egzemplarzy wśród dostepnej literatury.
     2. Zapoznanie się z literaturą.
     3. Zdefiniowanie specyfikacji projektu na postawie zdobytej wiedzy.
