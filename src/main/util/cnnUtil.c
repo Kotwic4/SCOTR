@@ -1,11 +1,30 @@
 #include "cnnUtil.h"
 
-void printForwad(Cnn *neuralNetwork, Tensor *input) {
+Tensor* printForwad(Cnn *neuralNetwork, Tensor *input) {
     Tensor *out = getForward(neuralNetwork, input);
     for (int i = 0; i < multiplePointParameters(out->size); i++) {
         printf("[%d] : %f", i, *getFasterTensorField(out, i));
     }
     printf("\n");
+    return out;
+}
+
+int getResultFromTensor(Tensor * out){
+    int answer = 0;
+    double max = 0;
+    for (int i = 0; i < multiplePointParameters(out->size); i++) {
+        double value = *getFasterTensorField(out, i);
+        if(value >= max){
+            answer = i;
+            max = value;
+        }
+    }
+    return answer;
+}
+
+int getResult(Cnn *neuralNetwork, Tensor *input) {
+    Tensor *out = getForward(neuralNetwork, input);
+    return getResultFromTensor(out);
 }
 
 void trainCnnTestCases(Cnn *neuralNetwork, TestCase *testCases, int caseNumber, int iterationNumber) {
@@ -14,6 +33,9 @@ void trainCnnTestCases(Cnn *neuralNetwork, TestCase *testCases, int caseNumber, 
             printf("Done: %d iterations from %d [%f %%]\n", i, iterationNumber, i * 100.0 / iterationNumber);
         }
         for (int j = 0; j < caseNumber; j++) {
+            if(j % 100 == 0){
+                printf("Done: %d testCases from %d [%f %%]\n", j, caseNumber, j * 100.0 /caseNumber);
+            }
             train(neuralNetwork, &testCases[j]);
         }
     }

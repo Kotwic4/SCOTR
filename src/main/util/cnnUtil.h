@@ -6,7 +6,7 @@
 /*
  * Process input tensor by neural network and prints result.
  */
-void printForwad(Cnn *neuralNetwork, Tensor *input);
+Tensor* printForwad(Cnn *neuralNetwork, Tensor *input);
 
 
 /*
@@ -14,5 +14,9 @@ void printForwad(Cnn *neuralNetwork, Tensor *input);
  * Every 100 iteration there is information about progress.
  */
 void trainCnnTestCases(Cnn *neuralNetwork, TestCase *testCases, int caseNumber, int iterationNumber);
+
+int getResult(Cnn *neuralNetwork, Tensor *input);
+
+int getResultFromTensor(Tensor * out);
 
 #endif //SCOTR_CNNUTIL_H

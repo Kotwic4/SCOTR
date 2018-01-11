@@ -36,8 +36,8 @@ set(SOURCE_FILES
         src/main/io/cnnProcesing.h
         src/main/util/cnnUtil.c
         src/main/util/cnnUtil.h
-        src/main/examples/mintExample.c
-        src/main/examples/mintExample.h
+        src/main/examples/mnistExample.c
+        src/main/examples/mnistExample.h
         src/main/examples/simpleExample.c
         src/main/examples/simpleExample.h
         src/test/math/pointTest.c
