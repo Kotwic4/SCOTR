@@ -2,9 +2,10 @@ from captcha.image import ImageCaptcha
 from claptcha import Claptcha
 import string
 import random
+
 WIDTH = 200
 HEIGHT = 100
-MAX = 10
+MAX = 5
 CASES = 100
 RESULT_FILE = "results.txt"
 FONT = "./orange.ttf"
