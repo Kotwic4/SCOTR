@@ -1,4 +1,5 @@
 #include "cnnProcesing.h"
+#include <mem.h>
 
 ReluLayer *readReluLayerFile(FILE *file) {
     Point point = readPointFile(file);
@@ -6,7 +7,7 @@ ReluLayer *readReluLayerFile(FILE *file) {
 }
 
 void saveReluLayerFile(FILE *file, ReluLayer *layer) {
-    savePointFile(file, *layer->in->size);
+    savePointFile(file, *layer->back->size);
 }
 
 PoolLayer *readPoolLayerFile(FILE *file) {
@@ -17,52 +18,52 @@ PoolLayer *readPoolLayerFile(FILE *file) {
 }
 
 void savePoolLayerFile(FILE *file, PoolLayer *layer) {
-    savePointFile(file, *layer->in->size);
+    savePointFile(file, *layer->back->size);
     fprintf(file, "%d %d\n", layer->stride, layer->spatialExtent);
 }
 
-Layer *readLayerFile(FILE *file){
+Layer *readLayerFile(FILE *file) {
 
     char buff[255];
-    fscanf(file,"%s", buff);
-    if(strcmp(buff,"conv") == 0){
+    fscanf(file, "%s", buff);
+    if (strcmp(buff, "conv") == 0) {
         return (Layer *) readConvLayerFile(file);
     }
-    if(strcmp(buff,"fc") == 0){
+    if (strcmp(buff, "fc") == 0) {
         return (Layer *) readFcLayerFile(file);
     }
-    if(strcmp(buff,"relu") == 0){
+    if (strcmp(buff, "relu") == 0) {
         return (Layer *) readReluLayerFile(file);
     }
-    if(strcmp(buff,"pool") == 0){
+    if (strcmp(buff, "pool") == 0) {
         return (Layer *) readPoolLayerFile(file);
     }
     return NULL;
 }
 
-void saveLayerFile(FILE *file, Layer *layer){
+void saveLayerFile(FILE *file, Layer *layer) {
 
     switch (layer->type) {
         case conv:
-            fprintf(file,"conv\n");
-            saveConvLayerFile(file,(ConvLayer *) layer);
+            fprintf(file, "conv\n");
+            saveConvLayerFile(file, (ConvLayer *) layer);
             break;
         case fc:
-            fprintf(file,"fc\n");
+            fprintf(file, "fc\n");
             saveFcLayerFile(file, (FcLayer *) layer);
             break;
         case relu:
-            fprintf(file,"relu\n");
+            fprintf(file, "relu\n");
             saveReluLayerFile(file, (ReluLayer *) layer);
             break;
         case pool:
-            fprintf(file,"pool\n");
+            fprintf(file, "pool\n");
             savePoolLayerFile(file, (PoolLayer *) layer);
             break;
     }
 }
 
-FcLayer *readFcLayerFile(FILE *file){
+FcLayer *readFcLayerFile(FILE *file) {
     Point inSize = readPointFile(file);
     Point outPoint = readPointFile(file);
     FcLayer *fcLayer = malloc(sizeof(FcLayer));
@@ -77,32 +78,35 @@ FcLayer *readFcLayerFile(FILE *file){
     return fcLayer;
 }
 
-void saveFcLayerFile(FILE *file, FcLayer *layer){
-    savePointFile(file,*layer->back->size);
-    savePointFile(file,*layer->out->size);
-    writeTensorToFile(layer->grad,file);
-    writeTensorToFile(layer->oldGrad,file);
-    writeTensorToFile(layer->weights,file);
+void saveFcLayerFile(FILE *file, FcLayer *layer) {
+    savePointFile(file, *layer->back->size);
+    savePointFile(file, *layer->out->size);
+    writeTensorToFile(layer->grad, file);
+    writeTensorToFile(layer->oldGrad, file);
+    writeTensorToFile(layer->weights, file);
 }
 
-Cnn* readCnnFile(FILE *file){
+Cnn *readCnnFile(FILE *file) {
     Cnn *cnn = malloc(sizeof(Cnn));
-    cnn->inSize = copyPoint(readPointFile(file));
-    cnn->layers = initVector(0);
+    Point point = readPointFile(file);
+    cnn->inSize = copyPoint(&point);
     int layersNumber;
-    fscanf(file,"%d",&layersNumber);
-    for(int i = 0; i< layersNumber; i++){
-        addLayer(cnn,readLayerFile(file));
+    fscanf(file, "%d", &layersNumber);
+    cnn->layers = calloc((size_t) layersNumber, sizeof(Tensor *));
+    cnn->layersNumber = 0;
+    cnn->arraySize = layersNumber;
+    for (int i = 0; i < layersNumber; i++) {
+        addLayer(cnn, readLayerFile(file));
     }
     return cnn;
 }
 
-void saveCnnFile(FILE *file, Cnn *cnn){
-    savePointFile(file,*cnn->inSize);
-    int layersNumber = cnn->layers->size;
-    fprintf(file,"%d\n",layersNumber);
-    for(int i = 0; i< layersNumber; i++){
-        saveLayerFile(file,*(Layer **)getVectorField(cnn->layers,i));
+void saveCnnFile(FILE *file, Cnn *cnn) {
+    savePointFile(file, *cnn->inSize);
+    int layersNumber = cnn->layersNumber;
+    fprintf(file, "%d\n", layersNumber);
+    for (int i = 0; i < layersNumber; i++) {
+        saveLayerFile(file, cnn->layers[i]);
     }
 }
 
@@ -119,28 +123,29 @@ ConvLayer *readConvLayerFile(FILE *file) {
     convLayer->stride = stride;
     convLayer->spatial = spatialExtent;
     convLayer->padding = padding;
-    convLayer->filt = initVector(0);
-    convLayer->oldGrad = initVector(0);
-    convLayer->grad = initVector(0);
+    convLayer->filterNumber = filtersNumber;
+    convLayer->filt = calloc((size_t) filtersNumber, sizeof(Tensor *));
+    convLayer->oldGrad = calloc((size_t) filtersNumber, sizeof(Tensor *));
+    convLayer->grad = calloc((size_t) filtersNumber, sizeof(Tensor *));
     for (int i = 0; i < filtersNumber; i++) {
         Tensor *filter = readTensorFromFile(file);
         Tensor *filterGrad = readTensorFromFile(file);
         Tensor *filterOldGrad = readTensorFromFile(file);
-        pushBackVector(convLayer->filt, filter);
-        pushBackVector(convLayer->oldGrad, filterOldGrad);
-        pushBackVector(convLayer->grad, filterGrad);
+        convLayer->filt[i] = filter;
+        convLayer->oldGrad[i] = filterOldGrad;
+        convLayer->grad[i] = filterGrad;
     }
     return convLayer;
 }
 
 void saveConvLayerFile(FILE *file, ConvLayer *layer) {
-    int filtersNumber = layer->filt->size;
+    int filtersNumber = layer->filterNumber;
     savePointFile(file, *layer->out->size);
     savePointFile(file, *layer->back->size);
     fprintf(file, "%d %d %d %d\n", layer->stride, layer->spatial, layer->padding, filtersNumber);
     for (int i = 0; i < filtersNumber; i++) {
-        writeTensorToFile(*(Tensor **) getVectorField(layer->filt, i), file);
-        writeTensorToFile(*(Tensor **) getVectorField(layer->grad, i), file);
-        writeTensorToFile(*(Tensor **) getVectorField(layer->oldGrad, i), file);
+        writeTensorToFile(layer->filt[i], file);
+        writeTensorToFile(layer->grad[i], file);
+        writeTensorToFile(layer->oldGrad[i], file);
     }
 }

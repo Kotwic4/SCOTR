@@ -1,3 +1,4 @@
+#include <mem.h>
 #include "mnistExample.h"
 
 #define MNIST_CNN "mnistCnn.txt"
@@ -10,7 +11,7 @@ Tensor *getMnistFile(FILE * file) {
         for (int j = 0; j < 28; j++) {
             int x;
             fscanf(file, "%d", &x);
-            *getFasterTensorField(tensor, i * 28 + j) = x / 255;
+            *getFasterTensorField(tensor, i * 28 + j) = x / 255.0;
         }
     }
     return tensor;
@@ -29,7 +30,7 @@ Tensor *getMnist(char * filename) {
 }
 
 TestCase *mnistReadTestCasesFile(FILE * file, int caseNumber) {
-    TestCase *testCases = calloc(sizeof(TestCase), (size_t) caseNumber);
+    TestCase *testCases = calloc((size_t) caseNumber, sizeof(TestCase));
     for (int i = 0; i < caseNumber; i++) {
         int expected;
         fscanf(file, "%d\n", &expected);
@@ -94,9 +95,9 @@ Cnn* getMnistCnn(){
     addConvLayer(cnn, 1, 5, 8, 0);
     addReluLayer(cnn);
     addPoolLayer(cnn, 2, 2);
-    addConvLayer(cnn, 1, 3, 10, 0);
-    addReluLayer(cnn);
-    addPoolLayer(cnn, 2, 2);
+//    addConvLayer(cnn, 1, 3, 10, 0);
+//    addReluLayer(cnn);
+//    addPoolLayer(cnn, 2, 2);
     addFcLayer(cnn, 10);
     return cnn;
 }
@@ -120,7 +121,7 @@ void mnistMainRepl() {
 
 void mnistMainTrain() {
     Cnn *cnn = getMnistCnn();
-    mnistTrain(cnn, 1);
+    mnistTrain(cnn, 2);
     FILE *file = fopen(MNIST_CNN, "w");
     saveCnnFile(file, cnn);
     fclose(file);

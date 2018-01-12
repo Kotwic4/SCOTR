@@ -2,10 +2,10 @@
 
 Vector *initVector(int size) {
     Vector *thisVector = malloc(sizeof(Vector));
-    if (size < 0) {
-        fprintf(stderr, "initVector error: size can't be negative\n");
-        return NULL;
-    }
+//    if (size < 0) {
+//        fprintf(stderr, "initVector error: size can't be negative\n");
+//        return NULL;
+//    }
     if (size == 0) {
         thisVector->data = NULL;
         thisVector->size = 0;
@@ -34,10 +34,10 @@ void pushBackVector(Vector *vector, void *value) {
 }
 
 void *getVectorField(Vector *vector, int index) {
-    if (vector->size <= index) {
-        fprintf(stderr, "getVectorField error: index out of range\n");
-        return NULL;
-    }
+//    if (vector->size <= index) {
+//        fprintf(stderr, "getVectorField error: index out of range\n");
+//        return NULL;
+//    }
     return vector->data + index;
 }
 

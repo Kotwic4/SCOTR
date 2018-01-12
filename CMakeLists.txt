@@ -39,29 +39,7 @@ set(SOURCE_FILES
         src/main/examples/mnistExample.c
         src/main/examples/mnistExample.h
         src/main/examples/simpleExample.c
-        src/main/examples/simpleExample.h
-        src/test/math/pointTest.c
-        src/test/math/pointTest.h
-        src/test/math/mathTest.c
-        src/test/math/mathTest.h
-        src/test/tests.c
-        src/test/tests.h
-        src/test/math/vectorTest.c
-        src/test/math/vectorTest.h
-        src/test/math/tensorTest.c
-        src/test/math/tensorTest.h
-        src/test/neural/cnnTest.c
-        src/test/neural/cnnTest.h
-        src/test/neural/poolLayerTest.c
-        src/test/neural/poolLayerTest.h
-        src/test/neural/neuralTest.c
-        src/test/neural/neuralTest.h
-        src/test/neural/convLayerTest.c
-        src/test/neural/convLayerTest.h
-        src/test/neural/gradTest.c
-        src/test/neural/gradTest.h
-        src/test/neural/reluLayerTest.c
-        src/test/neural/reluLayerTest.h)
+        src/main/examples/simpleExample.h)
 
 add_executable(SCOTR ${SOURCE_FILES} src/main/main.c)
 target_link_libraries(SCOTR m)

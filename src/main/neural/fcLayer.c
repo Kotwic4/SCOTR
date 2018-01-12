@@ -14,17 +14,18 @@ FcLayer *initFcLayer(Point *inSize, int outSize) {
     fcLayer->input = initTensor(&outPoint);
     fcLayer->weights = initTensor(&weightSize);
 
-    for (int i = 0; i < multiplePointParameters(&outPoint); i++) {
+    for (int i = 0; i < multiplePointParameters(&outPoint); ++i) {
         *getFasterTensorField(fcLayer->grad, i) = 0;
         *getFasterTensorField(fcLayer->oldGrad, i) = 0;
     }
 
     int max = multiplePointParameters(inSize);
-    double maxVal = 2.19722f / max;
+    double maxVal = 2.19722 / max;
 
-    for (int i = 0; i < outSize; i++) {
-        for (int j = 0; j < max; j++) {
-            *getTensorField(fcLayer->weights, (Point) {j, i, 0}) = maxVal * rand() / (double) RAND_MAX;
+    for (int i = 0; i < outSize; ++i) {
+        for (int j = 0; j < max; ++j) {
+            Point index = {j, i, 0};
+            *getTensorField(fcLayer->weights, &index) = maxVal * rand() / (double) RAND_MAX;
         }
     }
 
@@ -32,7 +33,7 @@ FcLayer *initFcLayer(Point *inSize, int outSize) {
 }
 
 double activatorFunction(double value) {
-    return 1.0f / (1.0f + exp(-value));
+    return 1.0 / (1.0 + exp(-value));
 }
 
 double activatorDerivative(double value) {
@@ -42,68 +43,41 @@ double activatorDerivative(double value) {
 
 void activateFcLayer(FcLayer *fcLayer, Tensor *in) {
     fcLayer->in = in;
-    for (int n = 0; n < fcLayer->out->size->height; n++) {
+    for (int n = 0; n < fcLayer->out->size->height; ++n) {
         double inputValue = 0;
-        for (int i = 0; i < fcLayer->in->size->height; i++) {
-            for (int j = 0; j < fcLayer->in->size->width; j++) {
-                for (int k = 0; k < fcLayer->in->size->depth; k++) {
-                    Point point = {i, j, k};
-                    double inValue = *getTensorField(fcLayer->in, point);
-                    int index = convertPointToIndex(point, *in->size);
-                    double weight = *getTensorField(fcLayer->weights, (Point) {index, n, 0});
-                    inputValue += inValue * weight;
-                }
-            }
+        for (int inIndex = 0; inIndex < multiplePointParameters(in->size); ++inIndex) {
+            double inValue = *getFasterTensorField(in, inIndex);
+            Point weightIndex = {inIndex, n, 0};
+            double weight = *getTensorField(fcLayer->weights, &weightIndex);
+            inputValue += inValue * weight;
         }
-        *getTensorField(fcLayer->input, (Point) {n, 0, 0}) = inputValue;
-        *getTensorField(fcLayer->out, (Point) {n, 0, 0}) = activatorFunction(inputValue);
+        Point outIndex = {n, 0, 0};
+        *getTensorField(fcLayer->input, &outIndex) = inputValue;
+        *getTensorField(fcLayer->out, &outIndex) = activatorFunction(inputValue);
     }
 }
 
 void backPropFcLayer(FcLayer *fcLayer, Tensor *nextLayerBack) {
 
-    for (int i = 0; i < fcLayer->in->size->height; i++) {
-        for (int j = 0; j < fcLayer->in->size->width; j++) {
-            for (int k = 0; k < fcLayer->in->size->depth; k++) {
-                *getTensorField(fcLayer->back, (Point) {i, j, k}) = 0;
-            }
-        }
+    for (int inIndex = 0; inIndex < multiplePointParameters(fcLayer->in->size); ++inIndex) {
+        *getFasterTensorField(fcLayer->back, inIndex) = 0;
     }
 
-    for (int n = 0; n < fcLayer->out->size->height; n++) {
-        double inputValue = *getTensorField(fcLayer->input, (Point) {n, 0, 0});
-        double grad = *getTensorField(nextLayerBack, (Point) {n, 0, 0}) * activatorDerivative(inputValue);
-        *getTensorField(fcLayer->grad, (Point) {n, 0, 0}) = grad;
-        for (int i = 0; i < fcLayer->in->size->height; i++) {
-            for (int j = 0; j < fcLayer->in->size->width; j++) {
-                for (int k = 0; k < fcLayer->in->size->depth; k++) {
-                    Point point = {i, j, k};
-                    int index = convertPointToIndex(point, *fcLayer->in->size);
-                    double weight = *getTensorField(fcLayer->weights, (Point) {index, n, 0});
-                    *getTensorField(fcLayer->back, point) += grad * weight;
-                }
-            }
+    for (int n = 0; n < fcLayer->out->size->height; ++n) {
+        Point outIndex = {n, 0, 0};
+        double inputValue = *getTensorField(fcLayer->input, &outIndex);
+        double grad = *getTensorField(nextLayerBack, &outIndex) * activatorDerivative(inputValue);
+        double oldGrad = *getTensorField(fcLayer->oldGrad, &outIndex);
+        *getTensorField(fcLayer->grad, &outIndex) = grad;
+        for (int inIndex = 0; inIndex < multiplePointParameters(fcLayer->in->size); ++inIndex) {
+            Point weightIndex = {inIndex, n, 0};
+            double weight = *getTensorField(fcLayer->weights, &weightIndex);
+            *getFasterTensorField(fcLayer->back, inIndex) += grad * weight;
+
+            double inValue = *getFasterTensorField(fcLayer->in, inIndex);
+            *getTensorField(fcLayer->weights, &weightIndex) = updateWeight(weight, grad, oldGrad, inValue);
         }
-
-    }
-
-
-    for (int n = 0; n < fcLayer->out->size->height; n++) {
-        double grad = *getTensorField(fcLayer->grad, (Point) {n, 0, 0});
-        double oldGrad = *getTensorField(fcLayer->oldGrad, (Point) {n, 0, 0});
-        for (int i = 0; i < fcLayer->in->size->height; i++) {
-            for (int j = 0; j < fcLayer->in->size->width; j++) {
-                for (int k = 0; k < fcLayer->in->size->depth; k++) {
-                    Point point = {i, j, k};
-                    double inValue = *getTensorField(fcLayer->in, point);
-                    int index = convertPointToIndex(point, *fcLayer->in->size);
-                    double weight = *getTensorField(fcLayer->weights, (Point) {index, n, 0});
-                    *getTensorField(fcLayer->weights, (Point) {index, n, 0}) = updateWeight(weight, grad, oldGrad,
-                                                                                            inValue);
-                }
-            }
-        }
-        *getTensorField(fcLayer->oldGrad, (Point) {n, 0, 0}) = updateGradient(grad, oldGrad);
+        *getTensorField(fcLayer->oldGrad, &outIndex) = updateGradient(grad, oldGrad);
     }
 }
 

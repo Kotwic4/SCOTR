@@ -6,9 +6,9 @@ PoolLayer *initPoolLayer(int stride, int spatialExtent, Point *inSize) {
     debugAssert((inSize->width - spatialExtent) % stride == 0);
     debugAssert(spatialExtent > 0);
     debugAssert(stride > 0);
-    int w = (inSize->width - spatialExtent) / stride + 1;
-    int h = (inSize->height - spatialExtent) / stride + 1;
-    Point outSize = {h, w, inSize->depth};
+    int width = (inSize->width - spatialExtent) / stride + 1;
+    int height = (inSize->height - spatialExtent) / stride + 1;
+    Point outSize = {height, width, inSize->depth};
     PoolLayer *poolLayer = malloc(sizeof(PoolLayer));
     poolLayer->type = pool;
     poolLayer->in = NULL;
@@ -19,6 +19,21 @@ PoolLayer *initPoolLayer(int stride, int spatialExtent, Point *inSize) {
     return poolLayer;
 }
 
+double findMaxValueArea(Tensor *in, Point *index, int spatialExtent, int stride) {
+    double max = -DBL_MAX;
+    for (int x = 0; x < spatialExtent; x++) {
+        for (int y = 0; y < spatialExtent; y++) {
+            Point point = {x + index->height * stride,
+                           y + index->width * stride,
+                           index->depth};
+            double val = *getTensorField(in, &point);
+            if (val > max)
+                max = val;
+        }
+    }
+    return max;
+}
+
 void activatePoolLayer(PoolLayer *poolLayer, Tensor *in) {
     debugAssert(poolLayer != NULL);
     debugAssert(in != NULL);
@@ -26,17 +41,9 @@ void activatePoolLayer(PoolLayer *poolLayer, Tensor *in) {
     for (int i = 0; i < poolLayer->out->size->height; i++) {
         for (int j = 0; j < poolLayer->out->size->width; j++) {
             for (int k = 0; k < poolLayer->out->size->depth; k++) {
-                double max = -DBL_MAX;
-                for (int x = 0; x < poolLayer->spatialExtent; x++) {
-                    for (int y = 0; y < poolLayer->spatialExtent; y++) {
-                        Point point = {x + i * poolLayer->stride,
-                                       y + j * poolLayer->stride,
-                                       k};
-                        double val = *getTensorField(in, point);
-                        if (val > max) max = val;
-                    }
-                }
-                *getTensorField(poolLayer->out, (Point) {i, j, k}) = max;
+                Point point = {i, j, k};
+                double max = findMaxValueArea(in, &point, poolLayer->spatialExtent, poolLayer->stride);
+                *getTensorField(poolLayer->out, &point) = max;
             }
         }
     }
@@ -61,17 +68,15 @@ void backPropPoolLayer(PoolLayer *poolLayer, Tensor *nextLayerBack) {
                 for (int x = x_min; x <= x_max; x++) {
                     for (int y = y_min; y <= y_max; y++) {
                         Point outIndex = {x, y, k};
-                        if (*getTensorField(poolLayer->in, inIndex) == *getTensorField(poolLayer->out, outIndex)) {
-                            sum += *getTensorField(nextLayerBack, outIndex);
+                        if (*getTensorField(poolLayer->in, &inIndex) == *getTensorField(poolLayer->out, &outIndex)) {
+                            sum += *getTensorField(nextLayerBack, &outIndex);
                         }
                     }
                 }
-                *getTensorField(poolLayer->back, inIndex) = sum;
-
+                *getTensorField(poolLayer->back, &inIndex) = sum;
             }
         }
     }
-
 }
 
 void freePoolLayer(PoolLayer *poolLayer) {

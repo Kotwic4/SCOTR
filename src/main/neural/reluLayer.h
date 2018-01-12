@@ -8,7 +8,7 @@ typedef struct {
     Tensor *back, *in, *out;
 } ReluLayer;
 
-ReluLayer *initReluLayer(Point *inSize);
+ReluLayer *initReluLayer(const Point *inSize);
 
 void activateReluLayer(ReluLayer *reluLayer, Tensor *in);
 

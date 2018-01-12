@@ -1,58 +1,76 @@
 #include "cnn.h"
 
-Cnn *initCnn(Point *inSize) {
+Cnn *initCnn(const Point *inSize) {
+    return initCnnWithSize(inSize,0);
+}
+
+Cnn *initCnnWithSize(const Point *inSize, unsigned int arraySize) {
     Cnn *cnn = malloc(sizeof(Cnn));
-    cnn->inSize = copyPoint(*inSize);
-    cnn->layers = initVector(0);
+    cnn->inSize = copyPoint(inSize);
+    cnn->layers = calloc(arraySize, sizeof(Layer *));
+    cnn->layersNumber = 0;
+    cnn->arraySize = arraySize;
     return cnn;
 }
 
-void train(Cnn *cnn, TestCase *testCase) {
+void train(const Cnn *cnn, const TestCase *testCase) {
     Tensor *result = getForward(cnn, testCase->input);
     backPropCnn(cnn, result, testCase->expected);
 }
 
-Tensor *getForward(Cnn *cnn, Tensor *input) {
+Tensor *getForward(const Cnn *cnn, Tensor *input) {
     Layer *previousLayer;
-    Layer *layer = *(Layer **) getVectorField(cnn->layers, 0);
+//    Layer *layer = *(Layer **) getVectorField(cnn->layers, 0);
+    Layer *layer = cnn->layers[0];
     activateLayer(layer, input);
-    for (int i = 1; i < cnn->layers->size; i++) {
+    for (int i = 1; i < cnn->layersNumber; ++i) {
         previousLayer = layer;
-        layer = *(Layer **) getVectorField(cnn->layers, i);
+//        layer = *(Layer **) getVectorField(cnn->layers, i);
+        layer = cnn->layers[i];
         input = previousLayer->out;
         activateLayer(layer, input);
     }
     return layer->out;
 }
 
-void backPropCnn(Cnn *cnn, Tensor *result, Tensor *expected) {
+void backPropCnn(const Cnn *cnn, const Tensor *result, const Tensor *expected) {
 
     Layer *nextLayer;
     Tensor *back = subTensor(result, expected);
-    Layer *layer = *(Layer **) getVectorField(cnn->layers, cnn->layers->size - 1);
+//    Layer *layer = *(Layer **) getVectorField(cnn->layers, cnn->layers->size - 1);
+    Layer *layer = cnn->layers[cnn->layersNumber-1];
     backPropLayer(layer, back);
     freeTensor(back);
-
-    for (int i = cnn->layers->size - 2; i >= 0; i--) {
+//    for (int i = cnn->layers->size - 2; i >= 0; i--) {
+    for (int i = cnn->layersNumber-1; i >= 0; --i) {
         nextLayer = layer;
-        layer = *(Layer **) getVectorField(cnn->layers, i);
+//        layer = *(Layer **) getVectorField(cnn->layers, i);
+        layer = cnn->layers[i];
         back = nextLayer->back;
         backPropLayer(layer, back);
     }
 
 }
 
-Point *getCnnOutSize(Cnn *cnn) {
-    if (cnn->layers->size == 0) {
+Point *getCnnOutSize(const Cnn *cnn) {
+//    if (cnn->layers->size == 0) {
+    if (cnn->layersNumber == 0) {
         return cnn->inSize;
     } else {
-        Layer *lastLayer = *(Layer **) getVectorField(cnn->layers, cnn->layers->size - 1);
+//        Layer *lastLayer = *(Layer **) getVectorField(cnn->layers, cnn->layers->size - 1);
+        Layer *lastLayer = cnn->layers[cnn->layersNumber-1];
         return lastLayer->out->size;
     }
 }
 
 void addLayer(Cnn *cnn, Layer *layer) {
-    pushBackVector(cnn->layers, layer);
+//    pushBackVector(cnn->layers, layer);
+    if(cnn->layersNumber == cnn->arraySize){
+        cnn->arraySize = cnn->arraySize * 2 + 1;
+        cnn->layers = realloc(cnn->layers, sizeof(Layer *) * cnn->arraySize);
+    }
+    cnn->layers[cnn->layersNumber] = layer;
+    ++cnn->layersNumber;
 }
 
 void addConvLayer(Cnn *cnn, int stride, int spatialExtent, int filtersNumber, int padding) {
@@ -76,11 +94,14 @@ void addReluLayer(Cnn *cnn) {
 }
 
 void freeCnn(Cnn *cnn) {
-    for (int i = 0; i < cnn->layers->size; i++) {
-        Layer *layer = *(Layer **) getVectorField(cnn->layers, i);
+//    for (int i = 0; i < cnn->layers->size; i++) {
+    for (int i = 0; i < cnn->layersNumber; i++) {
+//        Layer *layer = *(Layer **) getVectorField(cnn->layers, i);
+        Layer *layer = cnn->layers[i];
         freeLayer(layer);
     }
-    freeVector(cnn->layers);
+//    freeVector(cnn->layers);
+    free(cnn->layers);
     free(cnn->inSize);
     free(cnn);
 }

@@ -1,5 +1,7 @@
 #include "mathProcesing.h"
+
 #define STB_IMAGE_IMPLEMENTATION
+
 #include "../3rdParty/stb_image.h"
 
 
@@ -16,7 +18,7 @@ Tensor *readImagineToTensor(char *filename) {
                 point.width = col;
                 point.depth = colour;
                 int dataIndex = colour + col * nChannels + row * width * nChannels;
-                tensor->data[multiplePointParameters(&point)] = data[dataIndex] / 255;
+                tensor->data[multiplePointParameters(&point)] = data[dataIndex] / 255.0;
             }
         }
 
@@ -51,7 +53,8 @@ Tensor *addDimensionsToTensor(Tensor *oldT, int n, int k) {
     for (int i = mPP; i < mPP + oldT->size->height * oldT->size->width; i++) {
         newTensor->data[i] = n;
     }
-    for (int i = mPP + oldT->size->height * oldT->size->width; i < mPP + 2 * oldT->size->height * oldT->size->width; i++) {
+    for (int i = mPP + oldT->size->height * oldT->size->width;
+         i < mPP + 2 * oldT->size->height * oldT->size->width; i++) {
         newTensor->data[i] = k;
     }
     return newTensor;

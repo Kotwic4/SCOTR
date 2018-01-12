@@ -12,19 +12,24 @@
 #include <stdio.h>
 
 typedef struct {
-    Vector *layers;
+//    Vector *layers;
+    Layer **layers;
+    int layersNumber;
+    int arraySize;
     Point *inSize;
 } Cnn;
 
-Cnn *initCnn(Point *inSize);
+Cnn *initCnn(const Point *inSize);
 
-void train(Cnn *cnn, TestCase *testCase);
+Cnn *initCnnWithSize(const Point *inSize, unsigned int arraySize);
 
-Tensor *getForward(Cnn *cnn, Tensor *input);
+void train(const Cnn *cnn, const TestCase *testCase);
 
-void backPropCnn(Cnn *cnn, Tensor *result, Tensor *expected);
+Tensor *getForward(const Cnn *cnn, Tensor *input);
 
-Point *getCnnOutSize(Cnn *cnn);
+void backPropCnn(const Cnn *cnn, const Tensor *result, const Tensor *expected);
+
+Point *getCnnOutSize(const Cnn *cnn);
 
 void addLayer(Cnn *cnn, Layer *layer);
 

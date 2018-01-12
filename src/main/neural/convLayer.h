@@ -13,9 +13,10 @@ typedef struct {
     Tensor *back;
     Tensor *in;
     Tensor *out;
-    Vector *filt;
-    Vector *grad;
-    Vector *oldGrad;
+    Tensor **filt;
+    Tensor **grad;
+    Tensor **oldGrad;
+    int filterNumber;
     int stride;
     int spatial;
     int padding;
