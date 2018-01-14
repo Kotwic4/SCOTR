@@ -1,2 +1,4 @@
 claptcha
 captcha
+sklearn
+scipy

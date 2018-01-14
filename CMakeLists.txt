@@ -1,65 +1,45 @@
 cmake_minimum_required(VERSION 3.8)
 project(SCOTR)
 
-find_package(OpenCV REQUIRED)
+set(CMAKE_CXX_FLAGS_DEBUG "-O2")
 
 set(CMAKE_C_STANDARD 99)
 
 set(SOURCE_FILES
-        main.c
-        math/vector.h
-        math/tensor.h
-        math/point.h
-        neural/testCase.h
-        neural/layer.h
-        neural/cnn.h
-        neural/convLayer.h
-        neural/fcLayer.h
-        neural/poolLayer.h
-        neural/reluLayer.h
-        neural/cnn.c
-        neural/layer.c
-        neural/reluLayer.c
-        math/vector.c
-        math/tensor.c
-        math/point.c
-        neural/poolLayer.c
-        util/debugAssert.h
-        neural/convLayer.c
-        neural/fcLayer.c
-        neural/grad.c
-        neural/grad.h
-        tests/math/pointTest.c
-        tests/math/pointTest.h
-        tests/math/mathTest.c
-        tests/math/mathTest.h
-        tests/tests.c
-        tests/tests.h
-        tests/math/vectorTest.c
-        tests/math/vectorTest.h
-        tests/math/tensorTest.c
-        tests/math/tensorTest.h
-        tests/neural/cnnTest.c
-        tests/neural/cnnTest.h
-        tests/neural/fcLayerTest.c
-        tests/neural/fcLayerTest.h
-        tests/neural/poolLayerTest.c
-        tests/neural/poolLayerTest.h
-        tests/neural/neuralTest.c
-        tests/neural/neuralTest.h
-        tests/neural/convLayerTest.c
-        tests/neural/convLayerTest.h
-        tests/neural/gradTest.c
-        tests/neural/gradTest.h
-        tests/neural/layerTest.c
-        tests/neural/layerTest.h
-        tests/neural/reluLayerTest.c
-        tests/neural/reluLayerTest.h
-        IOlib/tensor_procesing.h
-        IOlib/tensor_procesing.c)
-add_executable(SCOTR ${SOURCE_FILES} main.c)
+        src/main/main.c
+        src/main/math/vector.h
+        src/main/math/tensor.h
+        src/main/math/point.h
+        src/main/neural/testCase.h
+        src/main/neural/layer.h
+        src/main/neural/cnn.h
+        src/main/neural/convLayer.h
+        src/main/neural/fcLayer.h
+        src/main/neural/poolLayer.h
+        src/main/neural/reluLayer.h
+        src/main/neural/cnn.c
+        src/main/neural/layer.c
+        src/main/neural/reluLayer.c
+        src/main/math/vector.c
+        src/main/math/tensor.c
+        src/main/math/point.c
+        src/main/neural/poolLayer.c
+        src/main/util/debugAssert.h
+        src/main/neural/convLayer.c
+        src/main/neural/fcLayer.c
+        src/main/neural/grad.c
+        src/main/neural/grad.h
+        src/main/io/mathProcesing.h
+        src/main/io/mathProcesing.c
+        src/main/3rdParty/stb_image.h
+        src/main/io/cnnProcesing.c
+        src/main/io/cnnProcesing.h
+        src/main/util/cnnUtil.c
+        src/main/util/cnnUtil.h
+        src/main/examples/mnistExample.c
+        src/main/examples/mnistExample.h
+        src/main/examples/simpleExample.c
+        src/main/examples/simpleExample.h)
 
-include_directories(${OpenCV_INCLUDE_DIRS})
-target_link_libraries(SCOTR ${OpenCV_LIBS})
-
-add_definitions(-O4 -g)
+add_executable(SCOTR ${SOURCE_FILES} src/main/main.c)
+target_link_libraries(SCOTR m)
