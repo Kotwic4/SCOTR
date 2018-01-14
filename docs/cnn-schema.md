@@ -1,4 +1,3 @@
-@@ -0,0 +1,87 @@
  +## Model
  +
  +### Model neuronu
