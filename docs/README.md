@@ -8,7 +8,7 @@ Celem projektu jest przede wszystkim poznanie konwolucyjnych sieci neuronowych, 
 
 Uwaga: Ze względu na założenia, napisany kod będzie znacznie wolniejszy od produkcyjnych biblotek. Nie służy on jednak jako produkt informatyczny, a jako narzędzie do nauki idei sieci CNN.
 
-### Wejscie
+### Wejście
 
 Program na wejściu bedzie otrzymywał zdjęcie w postaci bitmapy.
 
@@ -49,7 +49,7 @@ Napisanie zestawu narzędzi:
 3. Realizacja CNN  
 Stworzenie i wytrenowanie sieci, która rozpoznaje cyfrę podaną na zdjęciu.
 6. Podsumowanie i wyciągnięcie wniosków  
-Etap będzie polegał na krytycznym przyjrzeniu się projektowi i podsumowaniu jego przebiegu i wyników.
+Etap będzie polegał na krytycznym przyjrzeniu się projektowi i podsumowaniu jego przebiegu oraz wyników.
 
 ## Literatura
 * [Convolutional Neural Networks for Visual Recognition](http://cs231n.github.io/) – kurs konwolucyjnej sieci neuronowej ze stanforda (głowne źródło wiedzy)
@@ -58,19 +58,19 @@ Etap będzie polegał na krytycznym przyjrzeniu się projektowi i podsumowaniu j
 
 ## Podsumowanie
 
-# Mocne strony:
+### Mocne strony:
 * został zrealizowany główny cel projketu - uczestniczenie w nim nauczyło nas zasad działania sieci konwolucyjnych
 * projekt jest kompilowalny i działa poprawnie, sieć się uczy i rozpoznaje cyfry prawdopodobieństwiem z większym niż rozpoznawanie losowe
 * realizacja postępowła zgodnie z planem, nie było znacznych opóźnień ani żadnych przerw w tworzeniu projektu
 
-# Słabe strony:
+### Słabe strony:
 * nauka sieci trwa bardzo długo, przez co byliśmy zmuszeni do okrojenia początkowo zakładanego alfabetu
 
-# Wnioski:
+### Wnioski:
 * w przyszłosci warto byłoby usprawnić bibliotekę CNN poprzez wprowadzenie odpowiednich narzędzi:
-** wątków
-** bibliotek umożliwiających obliczenia na karcie graficznej
+- wątków
+- bibliotek umożliwiających obliczenia na karcie graficznej
 * sieci konwolucyjne pozwalają na rozpoznawanie obrazów z bardzo wysokim prawdopodobieństwem, jednakże wciąż jest ono zdecydowanie niższe niż możliwości ludzkiego mózgu
 
-Jesteśmy bardzo zadowoleni z wyboru tematu projektu oraz przebiegu jego realizacji. Uwaźamy, że mimo pewnych przezkód, został zrealizowany adekwatnie do naszych możliwości. Dzięki niemu znacznie poszerzylismy swoją wiedzę i opanowaiśmy nowe dla nas narzedzie do informatycznej analizy obrazu.
+Jesteśmy bardzo zadowoleni z wyboru tematu projektu oraz przebiegu jego realizacji. Uważamy, że mimo pewnych przeszkód, został on zrealizowany adekwatnie do naszych możliwości. Dzięki niemu znacznie poszerzylismy swoją wiedzę i opanowaliśmy nowe dla nas narzedzie do informatycznej analizy obrazu.
 
