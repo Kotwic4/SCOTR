@@ -1,4 +1,8 @@
-# Dokumentacja
+# SCOTR - Dokumentacja
+
+Simple Convolutional neural network Optical Text Recognition
+
+Anna Bukowska i Radomir Krawczykiewicz
 
 ## Specyfikacja projektu
 
@@ -70,15 +74,15 @@ Krótkie podsumowanie wiedzy zdobytej z [kursu stanforda](http://cs231n.github.i
 
 ### Model neuronu
 
-![neuronModel](imgs/neuronActivation.jpeg)
+![Przykaładowy model neuronu](imgs/neuronActivation.jpeg)
 
 ### Convolutional Neural Networks (CNNs / ConvNets)
 
-![cnnShema](imgs/cnnShema.jpeg)
+![Przykaładowy model CNN](imgs/cnnShema.jpeg)
 
 ### Fully-Connected
 
-![fcShema](imgs/fcShema.jpeg)
+![Przykładowy model tradycyjnej sieci neuronowej](imgs/fcShema.jpeg)
 
 #### Parametry
 * Rozmiar poprzedniej warstwy
@@ -86,8 +90,9 @@ Krótkie podsumowanie wiedzy zdobytej z [kursu stanforda](http://cs231n.github.i
 
 ### Convolutional
 
-![convAnalize](imgs/convAnalize.jpeg)
-![convInAction](imgs/convInAction.PNG)
+![Wnetrze warsty convolutional](imgs/convAnalize.jpeg)
+
+![Sieć convolutional jako macierze](imgs/convInAction.PNG)
 
 Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
 
@@ -100,15 +105,16 @@ Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
 
 ### Rectified Linear Unit
 
-![relu](imgs/relu.png)
+![Zasada dzialania warstwy relu](imgs/relu.png)
 
 #### Parametry
 * Rozmiar poprzedniej warstwy
 
 ### Pooling
 
-![pool](imgs/pool.jpeg)
-![pool](imgs/poolAction.jpeg)
+![Zasada dzialania warstwy pool(Obrazowo)](imgs/pool.jpeg)
+
+![Zasada dzialania warstwy relu(Macierz)](imgs/poolAction.jpeg)
 
 #### Parametry
 * Rozmiar poprzedniej warstwy
@@ -117,7 +123,7 @@ Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
 
 ### CNN in action
 
-![cnnExample](imgs/cnnExample.jpeg)
+![Przekrojowy przykład sieci CNN](imgs/cnnExample.jpeg)
 
 ### Schemat budowy
 
@@ -166,7 +172,7 @@ POOL(stride = 2, spatialExtent = 2)[14x14x8]
 FC[10,1,1]
 OUTPUT[10,1,1]
 ```
-![cnnFirstPlan](imgs/cnnFirstPlan.png)
+![Model sieci MNIST](imgs/cnnFirstPlan.png)
 
 ## Podsumowanie
 
