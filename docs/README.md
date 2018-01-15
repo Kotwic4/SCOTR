@@ -73,29 +73,21 @@ Generator testów oraz obrazków captcha został napisany w pythonie i ma osobn�
 Krótkie podsumowanie wiedzy zdobytej z [kursu stanforda](http://cs231n.github.io/).
 
 ### Model neuronu
-
 ![Przykaładowy model neuronu](imgs/neuronActivation.jpeg)
 
 ### Convolutional Neural Networks (CNNs / ConvNets)
-
 ![Przykaładowy model CNN](imgs/cnnShema.jpeg)
 
 ### Fully-Connected
-
 ![Przykładowy model tradycyjnej sieci neuronowej](imgs/fcShema.jpeg)
-
 #### Parametry
 * Rozmiar poprzedniej warstwy
 * Ilość neuronów
 
 ### Convolutional
-
 ![Wnetrze warsty convolutional](imgs/convAnalize.jpeg)
-
 ![Sieć convolutional jako macierze](imgs/convInAction.PNG)
-
 Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
-
 #### Parametry
 * Rozmiar poprzedniej warstwy
 * Stride (przesuniecie filtra)
@@ -104,39 +96,33 @@ Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
 * Ilość filtrów
 
 ### Rectified Linear Unit
-
 ![Zasada dzialania warstwy relu](imgs/relu.png)
-
 #### Parametry
 * Rozmiar poprzedniej warstwy
 
 ### Pooling
-
 ![Zasada dzialania warstwy pool(Obrazowo)](imgs/pool.jpeg)
-
 ![Zasada dzialania warstwy relu(Macierz)](imgs/poolAction.jpeg)
-
 #### Parametry
 * Rozmiar poprzedniej warstwy
 * Stride (przesuniecie filtra)
 * SpatialExtent (rozmiar filtra)
 
 ### CNN in action
-
 ![Przekrojowy przykład sieci CNN](imgs/cnnExample.jpeg)
 
 ### Schemat budowy
-
 Model bedzie postaci:
 ```
-INPUT -> [[CONV -> RELU]*N -> POOL?]*M -> [FC -> FC_RELU]*K -> FC -> OUTPUT | N,M,K >= 0
+INPUT 
+-> [[CONV -> RELU]*N -> POOL?]*M 
+-> [FC -> FC_RELU]*K -> FC 
+-> OUTPUT
+| N,M,K >= 0
 ```
 
 ## Przykladowa siec neuronowa
-
-Przykładowa sięc neuronowa z jednym neuronem.
-
-Dane przedstawia poniższa tabelka:
+Przykładowa sięc neuronowa z jednym neuronem. Dane przedstawia poniższa tabelka:
 
 | 0 | 1 | 2 | Wynik |
 | ------------- | ------------- | ------------- | ------------- |
