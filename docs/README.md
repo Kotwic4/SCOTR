@@ -56,6 +56,118 @@ Etap będzie polegał na krytycznym przyjrzeniu się projektowi i podsumowaniu j
 * „Deep Learning” – lan Goodfellow (książka zawierająca wiedzę teoretyczną)
 * ["Machine Learning" by Andrew Ng](https://www.coursera.org/learn/machine-learning)
 
+## Bibloteki
+
+Bibloteka CNN i matematyczna będą napisane w jezyku C bez użycia nietypowych zewnętrznych biblotek, aby program był łatwo przenaszalny miedzy platformami.
+
+W naszym projekcie użyliśmy jednej bibloteki zewnetrznej [stb_images](https://github.com/nothings/stb).
+
+Generator testów oraz obrazków captcha został napisany w pythonie i ma osobną [dokumentacje](https://github.com/Kotwic4/SCOTR/blob/master/generator/README.MD).
+
+## CNN - Podsumowanie wiedzy teoretycznej
+
+Krótkie podsumowanie wiedzy zdobytej z [kursu stanforda](http://cs231n.github.io/).
+
+### Model neuronu
+
+![neuronModel](imgs/neuronActivation.jpeg)
+
+### Convolutional Neural Networks (CNNs / ConvNets)
+
+![cnnShema](imgs/cnnShema.jpeg)
+
+### Fully-Connected
+
+![fcShema](imgs/fcShema.jpeg)
+
+#### Parametry
+* Rozmiar poprzedniej warstwy
+* Ilość neuronów
+
+### Convolutional
+
+![convAnalize](imgs/convAnalize.jpeg)
+![convInAction](imgs/convInAction.PNG)
+
+Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
+
+#### Parametry
+* Rozmiar poprzedniej warstwy
+* Stride (przesuniecie filtra)
+* SpatialExtent (rozmiar filtra)
+* Padding (zwiekszenie zerami)
+* Ilość filtrów
+
+### Rectified Linear Unit
+
+![relu](imgs/relu.png)
+
+#### Parametry
+* Rozmiar poprzedniej warstwy
+
+### Pooling
+
+![pool](imgs/pool.jpeg)
+![pool](imgs/poolAction.jpeg)
+
+#### Parametry
+* Rozmiar poprzedniej warstwy
+* Stride (przesuniecie filtra)
+* SpatialExtent (rozmiar filtra)
+
+### CNN in action
+
+![cnnExample](imgs/cnnExample.jpeg)
+
+### Schemat budowy
+
+Model bedzie postaci:
+```
+INPUT -> [[CONV -> RELU]*N -> POOL?]*M -> [FC -> FC_RELU]*K -> FC -> OUTPUT | N,M,K >= 0
+```
+
+## Przykladowa siec neuronowa
+
+Przykładowa sięc neuronowa z jednym neuronem.
+
+Dane przedstawia poniższa tabelka:
+
+| 0 | 1 | 2 | Wynik |
+| ------------- | ------------- | ------------- | ------------- |
+| 0 | 1 | 0 | 0 |
+| 1 | 1 | 1 | 1 |
+| 1 | 1 | 0 | 1 |
+| 0 | 0 | 1 | 0 |
+| 1 | 0 | 0 | ? |
+
+Łatwo zauwazyć że wynik jest zależny jedynie od kolumny 0 tym samym wynik ostatniego wiersza powinien wynieśc 1
+
+N = 0, M = 0, K = 0
+
+```
+INPUT -> FC -> OUTPUT
+INPUT[3x1x1]
+FC[1,1,1]
+OUTPUT[1,1,1]
+```
+
+## Model CNN MNIST
+
+Poniższy model został użyty w celu analizy obrazków [MNIST](http://yann.lecun.com/exdb/mnist/).
+
+N = 1 , M = 1, K = 0
+
+```
+INPUT -> CONV -> RELU -> POOL -> FC -> OUTPUT
+INPUT[28x28x1]
+CONV(stride = 1, spatialExtent = 5, filter = 8, padding = 0)[28x28x8]
+RELU[28x28x8]
+POOL(stride = 2, spatialExtent = 2)[14x14x8]
+FC[10,1,1]
+OUTPUT[10,1,1]
+```
+![cnnFirstPlan](imgs/cnnFirstPlan.png)
+
 ## Podsumowanie
 
 ### Mocne strony:
