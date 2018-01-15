@@ -16,7 +16,7 @@ Program na wejściu bedzie otrzymywał zdjęcie w postaci bitmapy.
 
 Ze względu na dość powolne uczenie się sieci zrezygnowaliśmy z pierwotnej wersji projektu, zawężając alfabet do cyfr arabskich. Nie wpłynęło to na główny cel implementacyjny (samodzielne stworzenie bibliotek oraz przykładu sieci konwolucyjnej), a znacznie ułatwiło pracę nad kodem poprzez zmniejszenie ilości czasu potrzebnego na naukę sieci.
 
-Obecnie sieć rozpoznaje przedstawioną na zdjęciu cyfrę. Jest to ręcznie napisana cyfra arabska wygenerowana przez bibliotekę "
+Obecnie sieć rozpoznaje przedstawioną na zdjęciu ręcznie napisaną cyfrę arabska. Do uczenia i testowania użyliśmy bazy danych [MNIST](http://yann.lecun.com/exdb/mnist/).
 
 ### Wyjście
 
@@ -67,9 +67,10 @@ Etap będzie polegał na krytycznym przyjrzeniu się projektowi i podsumowaniu j
 * nauka sieci trwa bardzo długo, przez co byliśmy zmuszeni do okrojenia początkowo zakładanego alfabetu
 
 ### Wnioski:
-* w przyszłosci warto byłoby usprawnić bibliotekę CNN poprzez wprowadzenie odpowiednich narzędzi:
+w przyszłosci warto byłoby usprawnić bibliotekę CNN poprzez wprowadzenie odpowiednich narzędzi:
 - wątków
 - bibliotek umożliwiających obliczenia na karcie graficznej
+- wektoryzowanie mnożenia macierzy
 
 Jesteśmy bardzo zadowoleni z wyboru tematu projektu oraz przebiegu jego realizacji. Uważamy, że mimo pewnych przeszkód, został on zrealizowany adekwatnie do naszych możliwości. Dzięki niemu znacznie poszerzylismy swoją wiedzę i opanowaliśmy nowe dla nas narzedzie do informatycznej analizy obrazu.
 
