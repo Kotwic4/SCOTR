@@ -18,4 +18,6 @@ void mnistMainRepl();
 
 void mnistMainTrain();
 
+void mnistMainTest();
+
 #endif //SCOTR_MNISTEXAMPLE_H

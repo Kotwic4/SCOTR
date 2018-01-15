@@ -36,7 +36,9 @@ def generate_samples(data, labels, directory='.', filename='results.txt', sample
 def generate_test_file(data, labels, directory='.', filename='results.txt'):
     result = open_file_in_directory(directory, filename)
     result.write(str(data.shape[0]) + '\n')
-    for i in range(data.shape[0]):
+    indexes = [i for i in range(data.shape[0])]
+    random.shuffle(indexes)
+    for i in indexes:
         label = labels[i]
         img = data[i]
         line = str(label) + '\n'

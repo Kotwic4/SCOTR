@@ -29,16 +29,9 @@ int getResult(Cnn *neuralNetwork, Tensor *input) {
 
 void trainCnnTestCases(Cnn *neuralNetwork, TestCase *testCases, int caseNumber, int iterationNumber) {
     for (int i = 0; i < iterationNumber; i++) {
-//        printf("Done: %d iterations from %d [%f %%]\n", i, iterationNumber, i * 100.0 / iterationNumber);
-//        FILE *file = fopen("tempCnn.txt", "w");
-//        if (file) {
-//            saveCnnFile(file,neuralNetwork);
-//            fclose(file);
-//        } else {
-//            printf("ERROR: Can't open file temp");
-//        }
+        printf("Done: %d iterations from %d [%f %%]\n", i, iterationNumber, i * 100.0 / iterationNumber);
         for (int j = 0; j < caseNumber; j++) {
-            if (j % 1000 == 0) {
+            if (j % 1000 == 0 && j != 0) {
                 printf("Done: %d testCases from %d [%f %%]\n", j, caseNumber, j * 100.0 / caseNumber);
             }
             train(neuralNetwork, &testCases[j]);
