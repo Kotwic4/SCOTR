@@ -65,9 +65,9 @@ N = 1 , M = 1, K = 0
 ```
 INPUT -> CONV -> RELU -> POOL -> FC -> OUTPUT
 INPUT[28x28x1]
-CONV(stride = 1, spatialExtent = 5, filter = 8, padding = 0)[28x28x10]
-RELU[28x28x10]
-POOL(stride = 2, spatialExtent = 2)[14x14x10]
+CONV(stride = 1, spatialExtent = 5, filter = 8, padding = 0)[28x28x8]
+RELU[28x28x8]
+POOL(stride = 2, spatialExtent = 2)[14x14x8]
 FC[10,1,1]
 OUTPUT[10,1,1]
 ```
