@@ -121,8 +121,11 @@ INPUT
 | N,M,K >= 0
 ```
 
-## Przykladowa siec neuronowa
-Przykładowa sięc neuronowa z jednym neuronem. Dane przedstawia poniższa tabelka:
+## Prosty przykład
+
+### Opis
+
+Dane przedstawia poniższa tabelka:
 
 | 0 | 1 | 2 | Wynik |
 | ------------- | ------------- | ------------- | ------------- |
@@ -134,6 +137,10 @@ Przykładowa sięc neuronowa z jednym neuronem. Dane przedstawia poniższa tabel
 
 Łatwo zauwazyć że wynik jest zależny jedynie od kolumny 0 tym samym wynik ostatniego wiersza powinien wynieśc 1
 
+### Model
+
+Przykładowa sięc neuronowa z jednym neuronem.
+
 N = 0, M = 0, K = 0
 
 ```
@@ -143,9 +150,22 @@ FC[1,1,1]
 OUTPUT[1,1,1]
 ```
 
-## Model CNN MNIST
+### Uczenie
 
-Poniższy model został użyty w celu analizy obrazków [MNIST](http://yann.lecun.com/exdb/mnist/).
+Pierwsze 4 wiersze stanowiły baze do nauki sieci.
+Były one uczone w 10 000 iteracji.
+
+### Wynik
+
+Sieć zwrócila wynik 0.988794 co możemy traktować jako 1, czego oczekiwaliśmy.
+
+## MNIST
+
+### Opis
+
+Poniższy model został użyty w celu analizy obrazków [MNIST](http://yann.lecun.com/exdb/mnist/). Szczegółowy opis znajduję się na początku dokumentacji.
+
+### Model
 
 N = 1 , M = 1, K = 0
 
@@ -160,7 +180,20 @@ OUTPUT[10,1,1]
 ```
 ![Model sieci MNIST](imgs/cnnFirstPlan.png)
 
-## Podsumowanie
+### Uczenie i Testowanie
+
+Zgodnie z baza danych sięc neuronowa uczyła się na 60 000 przykładach przez 100 iteracji.
+Następnie była testowana na 10 000 przykładach których maszyna nie widziała wcześniej.
+Za wynik sięci neuronowej przyjmowalismy najwyższy wynik na wyjściowych neuronach.
+Porównywaliśmy wynik sieci z oczekiwany i zliczaliśmy ilośc przykładów na których wyniki się nie zgadzały.
+
+### Wynik
+
+Wyniki były rózne w 3342 z 10 000.
+Tym samym nasza sieć uzyskiwała poprawny wynik dla 66.58 % testów.
+Jako że mamy 10 możliwych odpowiedzi, zgadywanie wyniku powinno skutkować wynikiem około 10%.
+
+## Podsumowanie Projektu
 
 ### Mocne strony:
 * został zrealizowany główny cel projketu - uczestniczenie w nim nauczyło nas zasad działania sieci konwolucyjnych
