@@ -68,26 +68,40 @@ W naszym projekcie użyliśmy jednej bibloteki zewnetrznej [stb_images](https://
 
 Generator testów oraz obrazków captcha został napisany w pythonie i ma osobną [dokumentacje](https://github.com/Kotwic4/SCOTR/blob/master/generator/README.MD).
 
-## CNN - Podsumowanie wiedzy teoretycznej
+## Convolutional Neural Networks (CNNs / ConvNets) - Podsumowanie wiedzy teoretycznej
 
 Krótkie podsumowanie wiedzy zdobytej z [kursu stanforda](http://cs231n.github.io/).
 
 ### Model neuronu
+
+Sięci neuronowe składają sie z tytułowych neuronów.
+Neurony mają swoje wagi oraz funkje aktywacji.
+W przypadku sieci CNN operujemy na tensorach(trójwymiarówych tablicach).
+
 ![Przykaładowy model neuronu](imgs/neuronActivation.jpeg)
 
-### Convolutional Neural Networks (CNNs / ConvNets)
 ![Przykaładowy model CNN](imgs/cnnShema.jpeg)
 
 ### Fully-Connected
+
+W warstwie FC każdy neuron trzyma osobna wage dla każdego wyjścia poprzedniej warstwy.
+
 ![Przykładowy model tradycyjnej sieci neuronowej](imgs/fcShema.jpeg)
+
 #### Parametry
 * Rozmiar poprzedniej warstwy
 * Ilość neuronów
 
 ### Convolutional
+
+Warstwa Convolutional trzyma wagi w postaci filtrów które poruszają się po wyjściu poprzedniej warstwy.
+
 ![Wnetrze warsty convolutional](imgs/convAnalize.jpeg)
+
 ![Sieć convolutional jako macierze](imgs/convInAction.PNG)
+
 Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
+
 #### Parametry
 * Rozmiar poprzedniej warstwy
 * Stride (przesuniecie filtra)
@@ -96,19 +110,31 @@ Live demo is [here](http://cs231n.github.io/convolutional-networks/#conv)
 * Ilość filtrów
 
 ### Rectified Linear Unit
+
+Warstwa Relu usuwa szum(wartości ujemne) z poprzedniej warstwy.
+
 ![Zasada dzialania warstwy relu](imgs/relu.png)
+
 #### Parametry
 * Rozmiar poprzedniej warstwy
 
 ### Pooling
+
+Warstwa Pool robi downsampling wyjścia poprzedniej warstwy po przez np funkcje max.
+
 ![Zasada dzialania warstwy pool(Obrazowo)](imgs/pool.jpeg)
+
 ![Zasada dzialania warstwy relu(Macierz)](imgs/poolAction.jpeg)
+
 #### Parametry
 * Rozmiar poprzedniej warstwy
 * Stride (przesuniecie filtra)
 * SpatialExtent (rozmiar filtra)
 
 ### CNN in action
+
+Sięc neuronową można analizować graficznie po przez rozbicie tensorów na obrazki.
+
 ![Przekrojowy przykład sieci CNN](imgs/cnnExample.jpeg)
 
 ### Schemat budowy
