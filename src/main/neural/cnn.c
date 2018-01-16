@@ -42,7 +42,7 @@ void backPropCnn(const Cnn *cnn, const Tensor *result, const Tensor *expected) {
     backPropLayer(layer, back);
     freeTensor(back);
 //    for (int i = cnn->layers->size - 2; i >= 0; i--) {
-    for (int i = cnn->layersNumber-1; i >= 0; --i) {
+    for (int i = cnn->layersNumber-2; i >= 0; --i) {
         nextLayer = layer;
 //        layer = *(Layer **) getVectorField(cnn->layers, i);
         layer = cnn->layers[i];
