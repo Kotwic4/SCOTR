@@ -208,15 +208,15 @@ OUTPUT[10,1,1]
 
 ### Uczenie i Testowanie
 
-Zgodnie z baza danych sięc neuronowa uczyła się na 60'000 przykładach przez 10 iteracji.
+Zgodnie z baza danych sięc neuronowa uczyła się na 60'000 przykładach przez 40 iteracji.
 Następnie była testowana na 10'000 przykładach których maszyna nie widziała wcześniej.
 Za wynik sięci neuronowej przyjmowalismy najwyższy wynik na wyjściowych neuronach.
 Porównywaliśmy wynik sieci z oczekiwany i zliczaliśmy ilośc przykładów na których wyniki się nie zgadzały.
 
 ### Wynik
 
-Wyniki były rózne w 3'342 z 10'000.
-Tym samym nasza sieć uzyskiwała poprawny wynik dla 66.58 % testów.
+Wyniki były rózne w 833 z 10'000.
+Tym samym nasza sieć uzyskiwała poprawny wynik dla 91.67 % testów.
 Jako że mamy 10 możliwych odpowiedzi, zgadywanie wyniku powinno skutkować wynikiem około 10%.
 
 ## Podsumowanie Projektu

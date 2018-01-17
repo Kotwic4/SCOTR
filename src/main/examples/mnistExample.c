@@ -3,6 +3,7 @@
 
 #define MNIST_CNN "mnistCnn.txt"
 #define MNIST_TRAIN_FILE "./mnist/train/train.txt"
+//#define MNIST_TRAIN_FILE "./results.txt"
 #define MNIST_TEST_FILE "./mnist/test/test.txt"
 
 Tensor *getMnistFile(FILE * file) {
@@ -175,7 +176,7 @@ void mnistMainTest() {
 
 void mnistMainTrain() {
     Cnn *cnn = getMnistCnn();
-    mnistTrain(cnn, 300);
+    mnistTrain(cnn, 40);
     FILE *file = fopen(MNIST_CNN, "w");
     saveCnnFile(file, cnn);
     fclose(file);

@@ -9,6 +9,6 @@ int main() {
 //    mnistMain();
     mnistMainTrain();
 //    mnistMainRepl();
-//    mnistMainTest();
+    mnistMainTest();
     return 0;
 }
