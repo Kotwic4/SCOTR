@@ -142,7 +142,8 @@ Model bedzie postaci:
 ```
 INPUT 
 -> [[CONV -> RELU]*N -> POOL?]*M 
--> [FC -> FC_RELU]*K -> FC 
+-> [FC -> FC_RELU]*K 
+-> FC 
 -> OUTPUT
 | N,M,K >= 0
 ```
